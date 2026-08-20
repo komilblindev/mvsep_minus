@@ -20,3 +20,4 @@
 - **Разработчик**: Комил Хамзаев
 - **Email**: hamzayevkomil52@gmail.com
 - **Telegram Канал**: [@it_help_uz](https://t.me/it_help_uz)
+- **GitHub Репозиторий**: [mvsep_minus](https://github.com/komilblindev/mvsep_minus)

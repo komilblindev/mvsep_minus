@@ -20,3 +20,4 @@ Specialized NVDA add-on for removing vocals and creating professional **instrume
 - **Developer**: Komil Hamzayev
 - **Email**: hamzayevkomil52@gmail.com
 - **Telegram Channel**: [@it_help_uz](https://t.me/it_help_uz)
+- **GitHub Repository**: [mvsep_minus](https://github.com/komilblindev/mvsep_minus)

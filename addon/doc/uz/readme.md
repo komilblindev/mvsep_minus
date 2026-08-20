@@ -20,3 +20,4 @@ Audio fayllardan vokalni olib tashlash va qo'shiqdan professional sifatli **minu
 - **Dasturchi**: Komil Hamzayev
 - **Email**: hamzayevkomil52@gmail.com
 - **Telegram Kanal**: [@it_help_uz](https://t.me/it_help_uz)
+- **GitHub Repozitoriya**: [mvsep_minus](https://github.com/komilblindev/mvsep_minus)
