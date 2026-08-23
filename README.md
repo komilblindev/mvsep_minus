@@ -33,9 +33,9 @@ While the MVSEP website is usable, separating audio for screen reader users invo
 
 | Shortcut | Action |
 | :--- | :--- |
-| **`NVDA + Alt + M`** | Open Minus Creation Dialog |
-| **`NVDA + Alt + K`** | Announce remaining credits / balance on MVSEP account |
-| **`NVDA + Alt + Shift + M`** | Open MVSEP Minus Settings panel |
+| **`NVDA + Shift + Alt + P`** | Open Minus Creation Dialog |
+| **`NVDA + Shift + Alt + C`** | Announce remaining credits / balance on MVSEP account |
+| **`NVDA + Shift + Alt + M`** | Open MVSEP Minus Settings panel |
 
 ---
 
