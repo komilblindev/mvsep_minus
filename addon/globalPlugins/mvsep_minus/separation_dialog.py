@@ -72,6 +72,19 @@ class MinusSeparationDialog(wx.Dialog):
 		
 		self.InitUI()
 		self.Centre()
+		self.Bind(wx.EVT_CHAR_HOOK, self.on_char_hook)
+		
+	def on_char_hook(self, event):
+		keycode = event.GetKeyCode()
+		if keycode == wx.WXK_ESCAPE:
+			self.Close()
+			return
+		elif keycode in (ord('B'), ord('b'), 1048, 1080):
+			if wx.Window.FindFocus() != self.file_text:
+				if self.start_btn.IsEnabled():
+					self.OnStart(None)
+				return
+		event.Skip()
 		
 	def InitUI(self):
 		panel = self

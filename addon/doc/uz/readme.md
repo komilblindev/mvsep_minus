@@ -1,23 +1,27 @@
-# MVSEP Minus Yaratuvchi - NVDA Addoni
+# MVSEP Minus Creator - NVDA Plagini
 
-Audio fayllardan vokalni olib tashlash va qo'shiqdan professional sifatli **minus / instrumental** yaratish uchun maxsus NVDA addoni.
+Audio fayllardan vokalni olib tashlash va professional **instrumental / minus** treklarni yaratish uchun maxsus NVDA plagini.
 
-## Asosiy Imkoniyatlar
-- **Faqat Minusga yo'naltirilgan**: BS Roformer, MelBand Roformer, SCNet, MDX23C, Karaoke, Reverb tozalash va boshqa eng sifatli modellar.
-- **Kredit tizimi**: Minus yaratilganda sarflangan va qolgan kreditlarni e'lon qilish.
-- **Sevimli modellar**: O'zingiz ko'p ishlatadigan modellarni Yulduzcha (⭐) bilan belgilab, tezda tanlash.
-- **Barcha modellarni ko'rish**: MVSEP dagi 35 dan ortiq modellarni to'liq ro'yxatdan tanlash.
-- **FFmpeg talab qilinmaydi**: Barcha ishlov berish MVSEP bulutli GPU serverlarida amalga oshiriladi.
-- **Ko'p tillilik**: O'zbekcha, Ruscha va Inglizcha to'liq qo'llab-quvvatlanadi.
-- **Moslik**: NVDA 2019.3 dan 2026.1 gacha bo'lgan barcha versiyalarda xatosiz ishlaydi.
+## Imkoniyatlar
+- **Minus va Instrumentalga yo'naltirilgan**: BS Roformer, MelBand Roformer, SCNet, MDX23C, Karaoke, De-reverb va boshqa eng yaxshi modellar.
+- **Kredit xabarnomalari**: Jarayon tugagach, sarflangan va qolgan kreditlarni o'qib beradi.
+- **Sevimli modellar**: O'zingizga yoqqan modellarni yulduzcha bilan belgilang va tez tanlang (★).
+- **Barcha modellar**: MVSEP'ning 35+ barcha ajratish modellariga kirish imkoniyati.
+- **FFmpeg talab qilinmaydi**: Faqat Python HTTP mijozi ishlatilgan; jarayon to'liq bulutli GPU serverlarida bajariladi.
+- **Ko'p tilli**: Ingliz, Rus va O'zbek tillari to'liq qo'llab-quvvatlanadi.
+- **Moslik**: NVDA 2019.3 dan 2026.1+ gacha ishlashi kafolatlangan.
 
-## Tezkor Tugmalar (NVDA sozlamalaridan o'zgartirilishi mumkin)
-- `NVDA+Alt+M`: Musiqani minus qilish oynasini ochish (Explorerda fayl tanlangan bo'lsa, avtomatik joylanadi).
-- `NVDA+Alt+K`: MVSEP hisobidagi qolgan kreditlar va statistikani ovozda aytish.
-- `NVDA+Alt+Shift+M`: MVSEP Sozlamalar oynasini ochish.
+## Global tezkor tugmalar (NVDA kiritish ishoralarida o'zgartirish mumkin)
+- `NVDA+Shift+Alt+P`: Ajratish (Minus qilish) oynasini ochish (Fayl menejerida tanlangan faylni avtomatik aniqlaydi).
+- `NVDA+Shift+Alt+C`: MVSEP hisobidagi qolgan kreditlarni tekshirish va o'qish.
+- `NVDA+Shift+Alt+M`: MVSEP Sozlamalarini ochish.
+
+## Oyna ichidagi tezkor tugmalar (MVSEP oynasi)
+- `B`: Ajratish jarayonini darhol boshlash (Boshlash).
+- `Escape`: Oynani yopish.
 
 ## Dasturchi va Aloqa
 - **Dasturchi**: Komil Hamzayev
 - **Email**: hamzayevkomil52@gmail.com
 - **Telegram Kanal**: [@it_help_uz](https://t.me/it_help_uz)
-- **GitHub Repozitoriya**: [mvsep_minus](https://github.com/komilblindev/mvsep_minus)
+- **GitHub Ombori**: [mvsep_minus](https://github.com/komilblindev/mvsep_minus)
