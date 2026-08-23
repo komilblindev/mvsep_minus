@@ -15,6 +15,7 @@ Specialized NVDA add-on for removing vocals and creating professional **instrume
 - `NVDA+Shift+Alt+P`: Open Minus Separation dialog (auto-detects selected file in Explorer).
 - `NVDA+Shift+Alt+C`: Announce remaining credits on MVSEP account.
 - `NVDA+Shift+Alt+M`: Open MVSEP Settings.
+- `NVDA+Shift+Alt+D`: Direct Minus (Instantly auto-starts separation for the selected file).
 
 ## Dialog Shortcuts (Inside Separation Dialog)
 - `B`: Instantly start separation.

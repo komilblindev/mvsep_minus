@@ -30,6 +30,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		"kb:NVDA+shift+alt+p": "createMinus",
 		"kb:NVDA+shift+alt+c": "checkCredits",
 		"kb:NVDA+shift+alt+m": "openSettings",
+		"kb:NVDA+shift+alt+d": "directMinus",
 	}
 	
 	def __init__(self):
@@ -187,3 +188,17 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def script_openSettings(self, gesture):
 		"""MVSEP API kaliti va minus parametrlarini sozlash."""
 		wx.CallAfter(self.open_settings_dialog)
+
+	@script(
+		description=_t("menu_create_minus_desc") + " (Tezkor / Direct)",
+		category=_t("addon_name")
+	)
+	def script_directMinus(self, gesture):
+		selected_file = get_selected_file_in_explorer()
+		
+		def _open_dialog():
+			dlg = MinusSeparationDialog(gui.mainFrame, initial_file=selected_file, auto_start=True)
+			dlg.ShowModal()
+			dlg.Destroy()
+			
+		wx.CallAfter(_open_dialog)

@@ -15,6 +15,7 @@ Audio fayllardan vokalni olib tashlash va professional **instrumental / minus** 
 - `NVDA+Shift+Alt+P`: Ajratish (Minus qilish) oynasini ochish (Fayl menejerida tanlangan faylni avtomatik aniqlaydi).
 - `NVDA+Shift+Alt+C`: MVSEP hisobidagi qolgan kreditlarni tekshirish va o'qish.
 - `NVDA+Shift+Alt+M`: MVSEP Sozlamalarini ochish.
+- `NVDA+Shift+Alt+D`: Tezkor Minus (Tanlangan fayl uchun ajratishni darhol avtomatik boshlash).
 
 ## Oyna ichidagi tezkor tugmalar (MVSEP oynasi)
 - `B`: Ajratish jarayonini darhol boshlash (Boshlash).

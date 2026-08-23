@@ -54,7 +54,7 @@ def play_progress_beep(percent):
 
 
 class MinusSeparationDialog(wx.Dialog):
-	def __init__(self, parent, initial_file=None):
+	def __init__(self, parent, initial_file=None, auto_start=False):
 		title = _t("dialog_title")
 		super(MinusSeparationDialog, self).__init__(
 			parent,
@@ -63,6 +63,7 @@ class MinusSeparationDialog(wx.Dialog):
 			style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
 		)
 		self.initial_file = initial_file
+		self.auto_start = auto_start
 		self.is_running = False
 		self.cancel_event = threading.Event()
 		self.worker_thread = None
@@ -73,7 +74,16 @@ class MinusSeparationDialog(wx.Dialog):
 		self.InitUI()
 		self.Centre()
 		self.Bind(wx.EVT_CHAR_HOOK, self.on_char_hook)
+		if self.auto_start:
+			wx.CallAfter(self.OnStart, None)
+		self.Bind(wx.EVT_CLOSE, self.OnClose)
 		
+
+	def OnClose(self, event):
+		if self.is_running:
+			self.cancel_event.set()
+		event.Skip()
+
 	def on_char_hook(self, event):
 		keycode = event.GetKeyCode()
 		if keycode == wx.WXK_ESCAPE:
@@ -255,12 +265,15 @@ class MinusSeparationDialog(wx.Dialog):
 		
 	def UpdateStatus(self, text, percent=None, play_beep=True):
 		def _update():
-			self.status_label.SetLabel(text)
-			if percent is not None:
-				val = max(0, min(100, int(percent)))
-				self.gauge.SetValue(val)
-				if play_beep:
-					play_progress_beep(val)
+			try:
+				self.status_label.SetLabel(text)
+				if percent is not None:
+					val = max(0, min(100, int(percent)))
+					self.gauge.SetValue(val)
+					if play_beep:
+						play_progress_beep(val)
+			except RuntimeError:
+				pass
 		wx.CallAfter(_update)
 		
 	def OnStart(self, event):
@@ -480,6 +493,10 @@ class MinusSeparationDialog(wx.Dialog):
 			wx.CallAfter(self._reset_controls)
 			
 	def _on_success_dialog(self):
+		try:
+			if not self: return
+		except RuntimeError:
+			return
 		if not self.saved_files:
 			return
 		saved_p = self.saved_files[0]
@@ -503,7 +520,10 @@ class MinusSeparationDialog(wx.Dialog):
 		dlg.Destroy()
 		
 	def _reset_controls(self):
-		self.start_btn.Enable(True)
+		try:
+			self.start_btn.Enable(True)
+		except RuntimeError:
+			return
 		self.cancel_btn.Enable(False)
 		self.browse_btn.Enable(True)
 		self.file_text.Enable(True)
