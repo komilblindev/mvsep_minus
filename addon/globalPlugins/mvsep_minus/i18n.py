@@ -8,11 +8,11 @@ Compatible with Python 3.7+ (NVDA 2019.3 - 2026.1+).
 MESSAGES = {
     "uz": {
         "addon_name": "MVSEP Minus Yaratuvchi",
-        "menu_create_minus": "MVSEP: Musiqani minus qilish...",
+        "menu_create_minus": "Musiqani minus qilish...",
         "menu_create_minus_desc": "Audio faylni vokal va instrumentalga ajratib minus yaratish",
-        "menu_check_credits": "MVSEP: Qolgan kreditlarni tekshirish...",
+        "menu_check_credits": "Qolgan kreditlarni tekshirish...",
         "menu_check_credits_desc": "MVSEP hisobidagi qolgan kreditlar va balansni tekshirish",
-        "menu_settings": "MVSEP: Sozlamalar...",
+        "menu_settings": "Sozlamalar...",
         "menu_settings_desc": "MVSEP API kaliti va minus parametrlarini sozlash",
         "settings_category": "MVSEP Minus",
         
@@ -101,11 +101,11 @@ MESSAGES = {
     },
     "ru": {
         "addon_name": "MVSEP Создатель Минусов",
-        "menu_create_minus": "MVSEP: Создать минус...",
+        "menu_create_minus": "Создать минус...",
         "menu_create_minus_desc": "Разделить аудиофайл на вокал и инструментал (минусовку)",
-        "menu_check_credits": "MVSEP: Проверить остаток кредитов...",
+        "menu_check_credits": "Проверить остаток кредитов...",
         "menu_check_credits_desc": "Проверить баланс и остаток кредитов MVSEP",
-        "menu_settings": "MVSEP: Настройки...",
+        "menu_settings": "Настройки...",
         "menu_settings_desc": "Настройка API ключа MVSEP и параметров минусовок",
         "settings_category": "MVSEP Минус",
         
@@ -194,11 +194,11 @@ MESSAGES = {
     },
     "en": {
         "addon_name": "MVSEP Minus Creator",
-        "menu_create_minus": "MVSEP: Create Minus / Instrumental...",
+        "menu_create_minus": "Create Minus / Instrumental...",
         "menu_create_minus_desc": "Separate audio file into vocals and instrumental (minus)",
-        "menu_check_credits": "MVSEP: Check Remaining Credits...",
+        "menu_check_credits": "Check Remaining Credits...",
         "menu_check_credits_desc": "Check MVSEP account balance and remaining credits",
-        "menu_settings": "MVSEP: Settings...",
+        "menu_settings": "Settings...",
         "menu_settings_desc": "Configure MVSEP API key and minus options",
         "settings_category": "MVSEP Minus",
         
