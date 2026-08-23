@@ -22,6 +22,13 @@ NVDA screen reader add-on for high-quality vocal removal, instrumental separatio
 
 ---
 
+## 🎯 Design and Purpose
+
+**Why create an NVDA add-on for this instead of using the website?**
+While the MVSEP website is usable, separating audio for screen reader users involves many manual steps (navigating to the site, finding the upload controls, monitoring page refreshes, and locating download links). This add-on condenses the entire workflow into a single keystroke directly from Windows File Explorer. Users can select an audio file, press a shortcut, track progress via accessible audio beeps, and get the finished track saved automatically, all without leaving their current context or managing browser tabs.
+
+---
+
 ## ⌨️ Default Shortcuts
 
 | Shortcut | Action |
