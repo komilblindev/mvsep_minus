@@ -7,7 +7,7 @@ addon_dir = os.path.join(base_dir, 'addon')
 dist_dir = os.path.join(base_dir, 'dist')
 os.makedirs(dist_dir, exist_ok=True)
 
-addon_name = 'mvsep_minus-1.0.2.nvda-addon'
+addon_name = 'mvsep_minus-1.0.3.nvda-addon'
 output_path = os.path.join(dist_dir, addon_name)
 
 print(f'Building {addon_name} from {addon_dir}...')

@@ -190,7 +190,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		wx.CallAfter(self.open_settings_dialog)
 
 	@script(
-		description=_t("menu_create_minus_desc") + " (Tezkor / Direct)",
+		description=_t("menu_direct_minus_desc"),
 		category=_t("addon_name")
 	)
 	def script_directMinus(self, gesture):
