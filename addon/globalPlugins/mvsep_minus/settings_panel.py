@@ -18,7 +18,7 @@ import threading
 from .i18n import _t, set_language, get_current_language, format_credit_display, format_duration
 from .config_manager import config, get_history_file_path, get_errors_file_path
 from .models_data import get_minus_models_list, get_all_models_list
-from .api_client import test_api_token, get_account_file_path, send_error_to_developer, get_server_queue
+from .api_client import test_api_token, get_account_file_path, send_error_to_developer, get_server_queue, get_user_account_info
 from .login_dialog import MVSEPAccountDialog
 from .site_history_dialog import SiteHistoryDialog
 
@@ -408,16 +408,19 @@ class MVSEPMinusSettingsPanel(SettingsPanelBase):
 		self.token_text.SetValue(token)
 		if hasattr(self, 'token_text_plain'):
 			self.token_text_plain.SetValue(token)
+		self.PopulateAccounts()
 
 	def OnLoginAccount(self, event):
 		dlg = MVSEPAccountDialog(self, mode="login", on_token_saved_callback=self.set_token_value)
 		dlg.ShowModal()
 		dlg.Destroy()
+		self.PopulateAccounts()
 
 	def OnRegisterAccount(self, event):
 		dlg = MVSEPAccountDialog(self, mode="register", on_token_saved_callback=self.set_token_value)
 		dlg.ShowModal()
 		dlg.Destroy()
+		self.PopulateAccounts()
 
 	def OnCopyToken(self, event):
 		token = self.get_current_token()
@@ -473,11 +476,21 @@ class MVSEPMinusSettingsPanel(SettingsPanelBase):
 			return
 
 		def _test_thread():
-			ok, msg = test_api_token(token)
-			if ok:
-				wx.CallAfter(lambda: wx.MessageBox(_t("token_valid") + f" ({msg})", _t("addon_name"), wx.OK | wx.ICON_INFORMATION, self))
+			ok, res = get_user_account_info(token)
+			if ok and isinstance(res, dict):
+				email = res.get("email") or res.get("name") or "user"
+				name = res.get("name", "")
+				mins = res.get("premium_minutes", 0)
+				desc = f"{name} ({email}) - {mins} min" if name else f"{email} ({mins} min)"
+				config.add_or_update_account(email=email, api_token=token, name=name, credits=mins)
+				wx.CallAfter(self.PopulateAccounts)
+				wx.CallAfter(lambda: wx.MessageBox(_t("token_valid") + f" ({desc})", _t("addon_name"), wx.OK | wx.ICON_INFORMATION, self))
+			elif ok:
+				config.add_or_update_account(email="user", api_token=token, name="Asosiy hisob", credits="active_free")
+				wx.CallAfter(self.PopulateAccounts)
+				wx.CallAfter(lambda: wx.MessageBox(_t("token_valid"), _t("addon_name"), wx.OK | wx.ICON_INFORMATION, self))
 			else:
-				wx.CallAfter(lambda: wx.MessageBox(_t("token_invalid", error=msg), _t("addon_name"), wx.OK | wx.ICON_ERROR, self))
+				wx.CallAfter(lambda: wx.MessageBox(_t("token_invalid", error=str(res)), _t("addon_name"), wx.OK | wx.ICON_ERROR, self))
 
 		t = threading.Thread(target=_test_thread)
 		t.daemon = True
@@ -506,7 +519,12 @@ class MVSEPMinusSettingsPanel(SettingsPanelBase):
 		t.start()
 
 	def onSave(self):
-		config.set("api_token", self.get_current_token())
+		cur_tok = self.get_current_token()
+		config.set("api_token", cur_tok)
+		if cur_tok:
+			active = config.get_active_account()
+			if not active or active.get("api_token") != cur_tok:
+				config.add_or_update_account(email="user", api_token=cur_tok)
 		
 		sel_m = self.model_choice.GetSelection()
 		if sel_m != wx.NOT_FOUND and sel_m < len(self.model_ids):
