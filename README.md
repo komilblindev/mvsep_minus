@@ -1,55 +1,86 @@
-# MVSEP Minus Creator (NVDA Add-on)
+# MVSEP Minus Yaratuvchi / MVSEP Minus Maker (NVDA Add-on)
 
-NVDA screen reader add-on for high-quality vocal removal, instrumental separation, and minus track creation using the official [MVSEP.com](https://mvsep.com/full_api) API.
+[![NVDA Compatibility](https://img.shields.io/badge/NVDA-2019.3%20--%202026.2-blue.svg)](https://www.nvaccess.org/)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-green.svg)](https://www.gnu.org/licenses/gpl-2.0)
+[![Python: 3.7 - 3.13+](https://img.shields.io/badge/Python-3.7%20--%203.13+-brightgreen.svg)](https://www.python.org/)
+[![API: MVSEP.com](https://img.shields.io/badge/API-MVSEP.com%20Live-orange.svg)](https://mvsep.com/full_api)
 
----
-
-## 🌟 Key Features
-
-- **35+ AI Separation Models**: Direct access to state-of-the-art separation models including:
-  - `BS Roformer (Vocal / Instrumental)` ⭐
-  - `MelBand Roformer`
-  - `SCNet Large`
-  - `Demucs v4`
-  - `MDX23C`
-  - `Karaoke (Backing vocals)`
-  - `Reverb Removal`
-- **Zero FFmpeg Dependency**: 100% pure Python standard library HTTP client. All heavy audio processing occurs on MVSEP's cloud GPU servers.
-- **Multilingual UI (3 Languages)**: Full native support for **O'zbekcha (Uzbek)**, **Русский (Russian)**, and **English**, automatically matching your NVDA display language.
-- **Credit & Balance Monitoring**: Real-time announcement and display of deducted credits and remaining balance (works seamlessly on free and paid tiers).
-- **Audio Feedback**: Dynamic rising tone pitch beeps (220 Hz to 1760 Hz) reflecting upload and download progress.
-- **Customizable Gestures**: Fully configurable via NVDA Menu -> Preferences -> Input Gestures.
+[O'zbekcha](#ozbekcha) | [Русский](#русский) | [English](#english)
 
 ---
 
-## 🎯 Design and Purpose
+## O'zbekcha
 
-**Why create an NVDA add-on for this instead of using the website?**
-While the MVSEP website is usable, separating audio for screen reader users involves many manual steps (navigating to the site, finding the upload controls, monitoring page refreshes, and locating download links). This add-on condenses the entire workflow into a single keystroke directly from Windows File Explorer. Users can select an audio file, press a shortcut, track progress via accessible audio beeps, and get the finished track saved automatically, all without leaving their current context or managing browser tabs.
+Audio fayllardan vokalni tozalash va professional sifatli **minus / instrumental** yaratish uchun mo'ljallangan maxsus NVDA plagini. Ushbu plagin rasmiy [MVSEP.com](https://mvsep.com/full_api) bulutli sun'iy intellekt API tizimi bilan to'liq integratsiya qilingan.
+
+### 📖 Foydalanish Qo'llanmasi
+1. **API Kalit olish**:
+   - `NVDA menyusi -> Parametrlar -> Sozlamalar -> MVSEP Minus` bo'limiga kiring;
+   - "Tizimga kirish..." oynasidagi **"Google / Sayt orqali olish (Brauzerda ochish)"** tugmasini bosing;
+   - Saytda **"Sign in with Google"** ni bosib kiring va tayyor API Tokenni plaginga qo'ying.
+   > ⚠️ *Eslatma: Oddiy email bilan ro'yxatdan o'tganda MVSEP xati kechikishi yoki kelmasligi mumkin (`Pending email verification`). Shuning uchun Google orqali kirish tavsiya etiladi.*
+2. **Musiqani minus qilish**:
+   - `NVDA menyusi -> Vositalar (Servis) -> MVSEP: Musiqani minus qilish...` ni oching;
+   - Faylni tanlang yoki URL havolani kiriting;
+   - Modelni tanlang (`BS Roformer` tavsiya etiladi);
+   - "Minus qilishni boshlash" tugmasini bosing. Natija `Downloads/MVSEP_Minus` jildiga tushadi.
+
+### 🌟 Imkoniyatlar
+- **Ko'p Akkauntlar Boshqaruvi (Multi-Account)** va avtomatik zaxira akkauntga o'tish (Failover);
+- **Saytdagi Tarix**: Oldingi treklarni ko'rish va qayta yuklab olish;
+- **Jonli Navbat**: Server yuklamasini tekshirish;
+- **URL orqali Ajratish**: Google Drive, Dropbox, MEGA va Direct audio;
+- **Xatoliklar Jurnali**: `mvsep_errors.txt` va dasturchiga xabar berish;
+- **35+ Model va 119 Algoritm**: `BS Roformer`, `MelBand`, `SCNet`, `Demucs v4 HT`, `Karaoke`, `Reverb Removal`, `AudioSR` va h.k.
 
 ---
 
-## ⌨️ Default Shortcuts
+## Русский
 
-| Shortcut | Action |
-| :--- | :--- |
-| **`NVDA + Shift + Alt + P`** | Open Minus Creation Dialog |
-| **`NVDA + Shift + Alt + C`** | Announce remaining credits / balance on MVSEP account |
-| **`NVDA + Shift + Alt + M`** | Open MVSEP Minus Settings panel |
+Специализированное дополнение для программы экранного доступа NVDA, предназначенное для качественного удаления вокала из аудиофайлов и создания **минусовок / инструменталов** профессионального уровня. Дополнение полностью интегрировано с официальным облачным API [MVSEP.com](https://mvsep.com/full_api).
+
+### 📖 Руководство пользователя
+1. **Получение API-ключа**:
+   - Откройте `Меню NVDA -> Параметры -> Настройки -> MVSEP Minus`;
+   - В диалоге входа нажмите кнопку **«Получить через Google / Сайт (Открыть в браузере)»**;
+   - Нажмите **«Sign in with Google»** и скопируйте полученный API Token в настройки дополнения.
+   > ⚠️ *Примечание: При обычной регистрации по email письмо подтверждения может задерживаться почтовыми сервисами (`Pending email verification`). Рекомендуется вход через Google.*
+2. **Создание минусовки**:
+   - Откройте `Меню NVDA -> Сервис -> MVSEP: Разделение музыки (Создание минуса)...`;
+   - Выберите файл или укажите ссылку;
+   - Выберите модель (`BS Roformer` рекомендуется);
+   - Нажмите «Начать разделение». Результат сохранится в `Загрузки/MVSEP_Minus`.
+
+### 🌟 Возможности
+- **Multi-Account** и автоматическое переключение на резервный аккаунт (Failover);
+- **История на сайте**: Просмотр и повторное скачивание треков;
+- **Очередь сервера**: Проверка загрузки серверов;
+- **Разделение по URL**: Google Drive, Dropbox, MEGA и прямые аудио-ссылки;
+- **Журнал ошибок**: Запись в `mvsep_errors.txt` и отправка разработчику;
+- **Более 35 моделей и 119 алгоритмов**.
 
 ---
 
-## 📥 Installation
+## English
 
-1. Download the latest **`mvsep_minus-1.0.0.nvda-addon`** from the [Releases](https://github.com/komilblindev/mvsep_minus/releases) page.
-2. Open or press `Enter` on the downloaded file.
-3. Confirm installation in NVDA and restart NVDA when prompted.
-4. Obtain a free API key from [MVSEP API](https://mvsep.com/full_api) and paste it into **NVDA Menu -> Preferences -> Settings -> MVSEP Minus**.
+A specialized screen reader add-on for NVDA designed to cleanly isolate or remove vocals from audio files and generate studio-grade **minus / instrumental** backing tracks. Fully integrated with the official [MVSEP.com](https://mvsep.com/full_api) cloud AI separation API.
+
+### 📖 User Guide
+1. **Obtaining API Key**:
+   - Open `NVDA Menu -> Preferences -> Settings -> MVSEP Minus`;
+   - In login dialog, click **"Get via Google / Website (Open in Browser)"**;
+   - Click **"Sign in with Google"** and paste the API Token into add-on settings.
+   > ⚠️ *Note: Standard email registration may suffer from mail delivery delays (`Pending email verification`). Sign in with Google is recommended.*
+2. **Separating Music**:
+   - Open `NVDA Menu -> Tools -> MVSEP: Music Separation (Create Minus)...`;
+   - Select file or paste URL;
+   - Choose AI model (`BS Roformer` recommended);
+   - Click "Start Separation". Saved to `Downloads/MVSEP_Minus`.
 
 ---
 
-## 👨‍💻 Developer & Support
-
-- **Developer**: Komil Hamzayev ([hamzayevkomil52@gmail.com](mailto:hamzayevkomil52@gmail.com))
-- **Telegram Channel**: [@it_help_uz](https://t.me/it_help_uz)
-- **Official API**: [https://mvsep.com/full_api](https://mvsep.com/full_api)
+## 📄 Contacts & License
+- **Author**: Komil Hamzayev (<hamzayevkomil52@gmail.com>)
+- **Telegram**: [@it_help_uz](https://t.me/it_help_uz)
+- **GitHub**: [github.com/komilblindev/mvsep_minus](https://github.com/komilblindev/mvsep_minus)
+- **License**: GNU GPL v2.0

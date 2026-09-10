@@ -1,44 +1,106 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <title>MVSEP Minus Yaratuvchi - Qo'llanma</title>
-    <style>
-        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 20px auto; padding: 0 10px; }
-        h1, h2, h3 { color: #005a9c; }
-        code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
-        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background: #f2f2f2; }
-    </style>
+<meta charset="utf-8">
+<title>MVSEP Minus Yaratuvchi - NVDA Plagini</title>
+<style>
+body { font-family: sans-serif; line-height: 1.6; margin: 2em; max-width: 850px; color: #222; }
+h1, h2, h3, h4 { color: #005a9c; }
+code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: Consolas, monospace; }
+ul { margin-bottom: 1.2em; }
+li { margin-bottom: 0.4em; }
+hr { border: 0; border-top: 1px solid #ddd; margin: 2em 0; }
+a { color: #0066cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.warning { background: #fff3cd; border-left: 5px solid #ffeeba; padding: 12px; margin: 15px 0; border-radius: 4px; }
+</style>
 </head>
 <body>
-    <h1>MVSEP Minus Yaratuvchi (NVDA Addoni)</h1>
-    <p>Audio fayllardan vokalni olib tashlash va qo'shiqdan professional sifatli <strong>minus / instrumental</strong> yaratish uchun maxsus addoni.</p>
-    
-    <h2>Asosiy Imkoniyatlar</h2>
-    <ul>
-        <li><strong>Faqat Minusga yo'naltirilgan:</strong> BS Roformer, MelBand Roformer, SCNet, MDX23C, Karaoke, Reverb tozalash va b.</li>
-        <li><strong>Kredit tizimi:</strong> Minus tayyor bo'lganda sarflangan va qolgan kreditlar e'lon qilinadi.</li>
-        <li><strong>Sevimli modellar:</strong> Eng ko'p ishlatiladigan modellarni ⭐ bilan belgilash va tezda tanlash.</li>
-        <li><strong>Barcha modellar:</strong> MVSEP dagi barcha 35+ modellarni ko'rish.</li>
-        <li><strong>FFmpeg talab qilinmaydi:</strong> Barcha ishlov berish MVSEP bulutli serverlarida amalga oshiriladi.</li>
-        <li><strong>O'suvchi bip tovushlari:</strong> Jarayon davomida NVDA ning standart 220Hz-1760Hz ko'tariluvchi signallari eshitiladi.</li>
-    </ul>
+<h1>MVSEP Minus Yaratuvchi - NVDA Plagini</h1>
+<p>Audio fayllardan vokalni tozalash va professional sifatli <strong>minus / instrumental</strong> yaratish uchun mo'ljallangan maxsus NVDA ekranni o'qish dasturi plagini. Ushbu plagin rasmiy <a href="https://mvsep.com/full_api">MVSEP.com</a> bulutli sun'iy intellekt API tizimi bilan to'liq integratsiya qilingan.</p>
 
-    <h2>Tezkor Tugmalar</h2>
-    <table>
-        <tr><th>Tugma</th><th>Vazifasi</th></tr>
-        <tr><td><code>NVDA + Alt + M</code></td><td>Musiqani minus qilish (Explorerda tanlangan faylni avtomatik aniqlaydi)</td></tr>
-        <tr><td><code>NVDA + Alt + K</code></td><td>MVSEP hisobidagi qolgan kreditlarni ovozda aytish</td></tr>
-        <tr><td><code>NVDA + Alt + Shift + M</code></td><td>MVSEP Sozlamalar oynasini ochish</td></tr>
-    </table>
-    <p><em>Eslatma:</em> Barcha tugmalarni <code>NVDA menyusi -> Parametrlar -> Boshqaruv tugmalari (Input Gestures)</code> bo'limidan o'zgartirish mumkin.</p>
+<hr>
 
-    <h2>Dasturchi va Aloqa</h2>
-    <p><strong>Dasturchi:</strong> Komil Hamzayev<br>
-    <strong>Email:</strong> <a href="mailto:hamzayevkomil52@gmail.com">hamzayevkomil52@gmail.com</a><br>
-    <strong>Telegram Kanal:</strong> <a href="https://t.me/it_help_uz">@it_help_uz</a><br>
-    <strong>GitHub Repozitoriya:</strong> <a href="https://github.com/komilblindev/mvsep_minus">github.com/komilblindev/mvsep_minus</a></p>
+<h2>📖 Foydalanish Qo'llanmasi (Qadamma-qadam)</h2>
+
+<h3>1-qadam: Akkaunt ulash va API kalit olish</h3>
+<p>Plagindan foydalanish uchun bir martalik bepul MVSEP API kaliti kerak bo'ladi.</p>
+
+<div class="warning">
+<strong>⚠️ DIQQAT: Pochta orqali tasdiqlash xati kechikishi yoki kelmasligi mumkin!</strong><br>
+MVSEP xalqaro xizmati bo'lgani sababli, email orqali yangi hisob ochganda tasdiqlash xatlari pochtaga (Gmail, Mail.ru va h.k.) yetib bormasligi yoki qattiq kechikishi mumkin (<code>Pending email verification</code> xatosi).<br><br>
+<strong>Eng to'g'ri, xatosiz va 100% tezkor yo'l:</strong>
+<ol>
+  <li><code>NVDA menyusi -&gt; Parametrlar -&gt; Sozlamalar -&gt; MVSEP Minus</code> bo'limiga kiring;</li>
+  <li>"Tizimga kirish..." yoki "Ro'yxatdan o'tish..." tugmasini bosing;</li>
+  <li>Ochilgan oynada <strong>"Google / Sayt orqali olish (Brauzerda ochish)"</strong> tugmasini bosing;</li>
+  <li>Brauzeringizda MVSEP ochilganda <strong>"Sign in with Google"</strong> (Google orqali kirish) tugmasini bosing;</li>
+  <li>Sahifada (<code>https://mvsep.com/full_api</code>) tayyor <strong>API Token</strong> chiqadi, uni nusxalab oling (<code>Ctrl + C</code>);</li>
+  <li>Plagin sozlamalaridagi <strong>"MVSEP API Kaliti"</strong> maydoniga qo'ying va <strong>"API kalitini tekshirish"</strong> tugmasini bosing.</li>
+</ol>
+</div>
+
+<h3>2-qadam: Musiqani minus qilish (Asosiy rejim)</h3>
+<ol>
+  <li>Klaviaturada <code>NVDA menyusi -&gt; Vositalar (Servis) -&gt; MVSEP: Musiqani minus qilish...</code> bandini tanlang;</li>
+  <li>Faylni tanlang yoki URL havolasini kiriting;</li>
+  <li>Kerakli sun'iy intellekt modelini tanlang (masalan, <code>BS Roformer</code>);</li>
+  <li>Natija formatini (MP3, WAV, FLAC) tanlang;</li>
+  <li><strong>"Minus qilishni boshlash"</strong> tugmasini bosing. Fayl avtomatik <code>Downloads/MVSEP_Minus</code> jildiga yuklab olinadi.</li>
+</ol>
+
+<h3>3-qadam: Fon rejimida tezkor minus qilish</h3>
+<p>Explorer'da audio faylni belgilab, biriktirilgan tezkor tugmani bossangiz, fon rejimida avtomatik ajratish boshlanadi.</p>
+
+<h3>4-qadam: Saytdagi ajratishlar tarixi va qayta yuklab olish</h3>
+<p>Sozlamalardagi <strong>"Saytdagi ajratishlar tarixi..."</strong> tugmasi orqali hisobingizdagi barcha treklarni ko'rish va qayta yuklab olish mumkin.</p>
+
+<hr>
+
+<h2>🌟 Asosiy Imkoniyatlar</h2>
+<ul>
+  <li><strong>Ko'p Akkauntlar Boshqaruvi</strong>: Bir nechta akkauntlarni saqlash va daqiqalarni ko'rish;</li>
+  <li><strong>Avtomatik Failover</strong>: Kredit tugaganda keyingi zaxira akkauntga avtomatik o'tish;</li>
+  <li><strong>Jonli Server Navbati</strong>: Server yuklamasini tekshirish;</li>
+  <li><strong>URL orqali Ajratish</strong>: Google Drive, Dropbox, MEGA va to'g'ridan-to'g'ri audio havolalari;</li>
+  <li><strong>Xatoliklar Jurnali</strong>: <code>mvsep_errors.txt</code> ga yozish va dasturchiga xabar berish;</li>
+  <li><strong>FFmpeg Talab Qilinmaydi</strong>;</li>
+  <li><strong>3 Tilda Mukammal Interfeys</strong> (UZ, RU, EN).</li>
+</ul>
+
+<hr>
+
+<h2>🎧 Sun'iy Intellekt Modellari va Kategoriyalar</h2>
+<p>Plaginda 35 dan ortiq modellar va jami <strong>119 ta rasmiy algoritm</strong> mavjud:</p>
+<ul>
+  <li><strong>Minus va Vokal</strong>: <code>BS Roformer</code> ⭐, <code>MelBand Roformer</code>, <code>SCNet Large</code>, <code>MDX23C</code>, <code>Demucs v4 HT</code>, <code>Karaoke (Backing vocals)</code>, <code>Medley Vox</code>, <code>Choir &amp; SATB</code>;</li>
+  <li><strong>Premium Ansamble</strong>: <code>Ensemble 2x/4x/6x</code>, <code>BS Roformer SW (6 stems)</code>, <code>Mega 53-stem</code>;</li>
+  <li><strong>Audio Tozalash</strong>: <code>Reverb Removal</code>, <code>DeNoise</code>, <code>Apollo Enhancers</code>, <code>AudioSR / FlashSR</code>, <code>Crowd Removal</code>, <code>BandIt Plus &amp; DnR v3</code>;</li>
+  <li><strong>Musiqa Asboblari</strong>: Drums, Piano, Bass, Guitar, Violin, Saxophone, Flute, Trumpet, Accordion va h.k.</li>
+</ul>
+
+<hr>
+
+<h2>⌨️ Boshqaruv Tugmalari (Input Gestures)</h2>
+<p>Sukut bo'yicha global tezkor tugmalar biriktirilmagan. Qulay tugmalarni <code>NVDA menyusi -&gt; Parametrlar -&gt; Boshqaruv tugmalari -&gt; MVSEP Minus Yaratuvchi</code> bo'limidan biriktirishingiz mumkin.</p>
+
+<hr>
+
+<h2>⚙️ O'rnatish va Talablar</h2>
+<ul>
+  <li><strong>NVDA Versiyalari</strong>: NVDA 2019.3 dan NVDA 2026.2 gacha;</li>
+  <li><strong>Python</strong>: Python 3.7 — Python 3.13+;</li>
+  <li><strong>Tashqi kutubxonalar</strong>: Talab qilinmaydi.</li>
+</ul>
+
+<hr>
+
+<h2>📄 Litsenziya va Mualliflik Huquqi</h2>
+<ul>
+  <li><strong>Litsenziya</strong>: GNU General Public License v2.0 (GPL-2.0);</li>
+  <li><strong>Dasturchi</strong>: Komil Hamzayev (<a href="mailto:hamzayevkomil52@gmail.com">hamzayevkomil52@gmail.com</a>);</li>
+  <li><strong>Telegram</strong>: <a href="https://t.me/it_help_uz">@it_help_uz</a>;</li>
+  <li><strong>GitHub</strong>: <a href="https://github.com/komilblindev/mvsep_minus">github.com/komilblindev/mvsep_minus</a>.</li>
+</ul>
 </body>
 </html>

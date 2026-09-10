@@ -1,44 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>MVSEP Minus Creator - Documentation</title>
-    <style>
-        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 20px auto; padding: 0 10px; }
-        h1, h2, h3 { color: #005a9c; }
-        code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
-        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background: #f2f2f2; }
-    </style>
+<meta charset="utf-8">
+<title>MVSEP Minus Maker - NVDA Add-on</title>
+<style>
+body { font-family: sans-serif; line-height: 1.6; margin: 2em; max-width: 850px; color: #222; }
+h1, h2, h3, h4 { color: #005a9c; }
+code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: Consolas, monospace; }
+ul { margin-bottom: 1.2em; }
+li { margin-bottom: 0.4em; }
+hr { border: 0; border-top: 1px solid #ddd; margin: 2em 0; }
+a { color: #0066cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.warning { background: #fff3cd; border-left: 5px solid #ffeeba; padding: 12px; margin: 15px 0; border-radius: 4px; }
+</style>
 </head>
 <body>
-    <h1>MVSEP Minus Creator (NVDA Add-on)</h1>
-    <p>Specialized NVDA add-on for removing vocals and creating professional <strong>instrumental / minus</strong> tracks from audio files via MVSEP API.</p>
-    
-    <h2>Features</h2>
-    <ul>
-        <li><strong>Focused on Minus / Instrumental:</strong> BS Roformer, MelBand Roformer, SCNet, MDX23C, Karaoke, De-reverb and more top-tier models.</li>
-        <li><strong>Credit Notifications:</strong> Announces spent and remaining credits upon completion.</li>
-        <li><strong>Favorite Models:</strong> Star and quickly select your preferred models (⭐).</li>
-        <li><strong>All Models Explorer:</strong> Access all 35+ MVSEP separation models.</li>
-        <li><strong>No FFmpeg Required:</strong> Processing is done on cloud GPU servers.</li>
-        <li><strong>Progress Beeps:</strong> NVDA rising audio tones from 220Hz to 1760Hz during upload and download.</li>
-    </ul>
+<h1>MVSEP Minus Maker - NVDA Add-on</h1>
+<p>A specialized screen reader add-on for NVDA designed to cleanly isolate or remove vocals from audio files and generate studio-grade <strong>minus / instrumental</strong> backing tracks. Fully integrated with the official <a href="https://mvsep.com/full_api">MVSEP.com</a> cloud AI separation API.</p>
 
-    <h2>Shortcuts</h2>
-    <table>
-        <tr><th>Shortcut</th><th>Action</th></tr>
-        <tr><td><code>NVDA + Alt + M</code></td><td>Open Minus Separation dialog (auto-detects selected file in Explorer)</td></tr>
-        <tr><td><code>NVDA + Alt + K</code></td><td>Announce remaining credits on MVSEP account</td></tr>
-        <tr><td><code>NVDA + Alt + Shift + M</code></td><td>Open MVSEP Settings</td></tr>
-    </table>
-    <p><em>Note:</em> All shortcuts are fully customizable in <code>NVDA Menu -> Preferences -> Input Gestures</code>.</p>
+<hr>
 
-    <h2>Developer & Contact</h2>
-    <p><strong>Developer:</strong> Komil Hamzayev<br>
-    <strong>Email:</strong> <a href="mailto:hamzayevkomil52@gmail.com">hamzayevkomil52@gmail.com</a><br>
-    <strong>Telegram Channel:</strong> <a href="https://t.me/it_help_uz">@it_help_uz</a><br>
-    <strong>GitHub Repository:</strong> <a href="https://github.com/komilblindev/mvsep_minus">github.com/komilblindev/mvsep_minus</a></p>
+<h2>📖 User Guide (Step-by-Step)</h2>
+
+<h3>Step 1: Connect Account &amp; Obtain API Key</h3>
+<p>A free personal MVSEP API key is required to use this add-on.</p>
+
+<div class="warning">
+<strong>⚠️ IMPORTANT: Known Email Verification Delivery Issues!</strong><br>
+Due to third-party spam filtering policies on MVSEP's mail delivery servers, confirmation emails often get delayed or fail to arrive when registering via basic email (<code>Pending email verification</code> status).<br><br>
+<strong>The Recommended, 100% Reliable Method (Takes 1 minute):</strong>
+<ol>
+  <li>Open <code>NVDA Menu -&gt; Preferences -&gt; Settings -&gt; MVSEP Minus</code>;</li>
+  <li>Click "Log in..." or "Register...";</li>
+  <li>Click the <strong>"Get via Google / Website (Open in Browser)"</strong> button;</li>
+  <li>On the MVSEP webpage, click <strong>"Sign in with Google"</strong>;</li>
+  <li>On the API page (<code>https://mvsep.com/full_api</code>), your <strong>API Token</strong> will be ready immediately. Copy it (<code>Ctrl + C</code>);</li>
+  <li>Paste it into the <strong>"MVSEP API Key"</strong> field in add-on settings and click <strong>"Check API Key"</strong>.</li>
+</ol>
+</div>
+
+<h3>Step 2: Separate Audio (Main Separation Dialog)</h3>
+<ol>
+  <li>Open: <code>NVDA Menu -&gt; Tools -&gt; MVSEP: Music Separation (Create Minus)...</code>;</li>
+  <li>Select an audio file or paste a remote URL;</li>
+  <li>Select an AI model (e.g. <code>BS Roformer</code> ⭐);</li>
+  <li>Select output format (MP3, WAV, FLAC);</li>
+  <li>Click <strong>"Start Separation"</strong>. The audio will be downloaded automatically to <code>Downloads/MVSEP_Minus</code>.</li>
+</ol>
+
+<h3>Step 3: Quick Background Separation</h3>
+<p>Select an audio file in File Explorer and press your assigned quick separation hotkey.</p>
+
+<h3>Step 4: Cloud Separation History &amp; Direct Download</h3>
+<p>Click <strong>"Separation history on site..."</strong> in settings to browse and re-download past tracks.</p>
+
+<hr>
+
+<h2>🌟 Key Features</h2>
+<ul>
+  <li><strong>Multi-Account</strong>: Multiple account management with balance display;</li>
+  <li><strong>Failover</strong>: Seamless backup account failover;</li>
+  <li><strong>Server Queue</strong>: Real-time server queue inspection;</li>
+  <li><strong>Remote URL</strong>: Google Drive, Dropbox, MEGA, and direct URLs;</li>
+  <li><strong>Error Logging</strong>: Log to <code>mvsep_errors.txt</code> with one-click reporting;</li>
+  <li><strong>No FFmpeg Required</strong>;</li>
+  <li><strong>Full Tri-Lingual Support</strong> (UZ, RU, EN).</li>
+</ul>
+
+<hr>
+
+<h2>🎧 AI Separation Models</h2>
+<p>Includes over 35 curated models and all <strong>119 official MVSEP algorithms</strong>:</p>
+<ul>
+  <li><strong>Minus &amp; Vocals</strong>: <code>BS Roformer</code> ⭐, <code>MelBand Roformer</code>, <code>SCNet Large</code>, <code>MDX23C</code>, <code>Demucs v4 HT</code>, <code>Karaoke (Backing vocals)</code>, <code>Medley Vox</code>, <code>Choir &amp; SATB</code>;</li>
+  <li><strong>Premium Ensembles</strong>: <code>Ensemble 2x/4x/6x</code>, <code>BS Roformer SW (6 stems)</code>, <code>Mega 53-stem</code>;</li>
+  <li><strong>Audio Enhancement</strong>: <code>Reverb Removal</code>, <code>DeNoise</code>, <code>Apollo Enhancers</code>, <code>AudioSR / FlashSR</code>, <code>Crowd Removal</code>, <code>BandIt Plus &amp; DnR v3</code>;</li>
+  <li><strong>Instruments</strong>: Drums, Piano, Bass, Guitar, Strings, Brass, Woodwinds, Percussion.</li>
+</ul>
+
+<hr>
+
+<h2>⌨️ Input Gestures</h2>
+<p>Configure preferred shortcuts under:<br>
+<code>NVDA Menu -&gt; Preferences -&gt; Input Gestures -&gt; MVSEP Minus Maker</code>.</p>
+
+<hr>
+
+<h2>⚙️ Requirements &amp; Compatibility</h2>
+<ul>
+  <li><strong>NVDA Compatibility</strong>: NVDA 2019.3 through 2026.2;</li>
+  <li><strong>Python</strong>: Python 3.7 — Python 3.13+;</li>
+  <li><strong>Dependencies</strong>: None.</li>
+</ul>
+
+<hr>
+
+<h2>📄 License &amp; Author Info</h2>
+<ul>
+  <li><strong>License</strong>: GNU General Public License v2.0 (GPL-2.0);</li>
+  <li><strong>Developer</strong>: Komil Hamzayev (<a href="mailto:hamzayevkomil52@gmail.com">hamzayevkomil52@gmail.com</a>);</li>
+  <li><strong>Telegram</strong>: <a href="https://t.me/it_help_uz">@it_help_uz</a>;</li>
+  <li><strong>GitHub</strong>: <a href="https://github.com/komilblindev/mvsep_minus">github.com/komilblindev/mvsep_minus</a>.</li>
+</ul>
 </body>
 </html>

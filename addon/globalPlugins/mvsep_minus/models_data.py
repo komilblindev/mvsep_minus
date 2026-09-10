@@ -1,86 +1,607 @@
 # -*- coding: utf-8 -*-
 """
-MVSEP Models Metadata - Original International Model Names (No Translation).
+MVSEP Models Metadata - Official Live MVSEP API (119 Algorithms).
 Standard model names as defined by MVSEP and AI research teams.
 """
 
-# Minus / Vocal Separation Models (Original Names)
+# 1. Premium & Ensemble Models
+PREMIUM_MODELS = [
+	("27", "Ensemble (vocals, instrum) [Coeff: 2x]"),
+	("22", "Ensemble (vocals, instrum, bass, drums, other) [Coeff: 4x]"),
+	("32", "Ensemble All-In (vocals, bass, drums, piano, guitar, lead/back, other) [Coeff: 6x]"),
+	("61", "BS Roformer SW (6 stems: vocals, bass, drums, guitar, piano, other)"),
+	("21", "Demucs4 HT (4 stems: vocals, drums, bass, other)"),
+	("124", "Mega 53-stem Model"),
+]
+
+# 2. Minus & Vocal Separation Models
 MINUS_MODELS = [
-	("40", "BS Roformer (Vocal / Instrumental) ⭐ Best Quality"),
-	("48", "MelBand Roformer (Vocal / Instrumental)"),
-	("46", "SCNet (Vocal / Instrumental)"),
-	("25", "MDX23C (Vocal / Instrumental)"),
-	("27", "Demucs4 Vocals 2023 (Vocal / Instrumental)"),
-	("43", "Multichannel BS (Vocal / Instrumental)"),
-	("23", "MDX B (Vocal / Instrumental)"),
-	("9", "UVR VR (Vocal / Music)"),
-	("49", "Karaoke (Lead / Backing Vocals)"),
-	("12", "MDX-B Karaoke (Lead / Backing Vocals)"),
-	("22", "Reverb Removal (De-reverb)"),
-	("57", "Male / Female Voice Separation"),
+	("39", "BS Roformer (vocals, instrumental) ⭐ Best Quality"),
+	("47", "MelBand Roformer (vocals, instrumental)"),
+	("121", "BS PolarFormer (vocals, instrumental)"),
+	("45", "SCNet (vocals, instrumental)"),
+	("26", "MDX23C (vocals, instrumental)"),
+	("24", "MDX B (vocals, instrumental)"),
+	("28", "Demucs4 Vocals 2023 (vocals, instrum)"),
+	("3", "Ultimate Vocal Remover VR (vocals, music)"),
+	("48", "MVSep Karaoke (lead/back vocals)"),
+	("7", "MDX-B Karaoke (lead/back vocals)"),
+	("42", "MVSep Multichannel BS (vocals, instrumental)"),
+	("56", "MVSep Male/Female separation"),
+	("52", "Medley Vox (Multi-singer separation)"),
+	("109", "MVSep Choir (choir, other)"),
+	("110", "MVSep SATB Choir (soprano, alto, tenor, bass)"),
 ]
 
-# All MVSEP Models (Original International Names)
+# 3. Clean & Audio Enhancement Models
+ENHANCE_MODELS = [
+	("50", "Apollo Enhancers (by JusperLee, Lew, baicai1145)"),
+	("23", "Reverb Removal (noreverb)"),
+	("46", "DeNoise by aufr33 and gabox"),
+	("58", "AudioSR (Super Resolution)"),
+	("59", "FlashSR (Super Resolution)"),
+	("33", "MVSep Crowd removal (crowd, other)"),
+	("25", "MVSep Demucs4HT DNR (speech, music, effects)"),
+	("35", "BandIt Plus (speech, music, effects)"),
+	("44", "BandIt v2 (speech, music, effects)"),
+	("55", "MVSep DnR v3 (speech, music, effects)"),
+	("115", "MVSep Braam"),
+	("123", "MVSep Risers"),
+	("119", "MVSep FX"),
+]
+
+# 4. Musical Instruments
+INSTRUMENT_MODELS = [
+	("43", "MVSep Drums (drums, other)"),
+	("40", "MVSep Bass (bass, other)"),
+	("86", "MVSep Synth (synth, other)"),
+	("36", "DrumSep (4-6 stems: kick, snare, cymbals, toms, ride, hh, crash)"),
+	("29", "MVSep Piano (piano, other)"),
+	("78", "MVSep Digital Piano (digital-piano, other)"),
+	("104", "MVSep Keys (keys, other)"),
+	("57", "MVSep Organ (organ, other)"),
+	("89", "MVSep Harpsichord (harpsichord, other)"),
+	("97", "MVSep Accordion (accordion, other)"),
+	("128", "MVSep Vibraphone"),
+	("129", "MVSep Metal Bars"),
+	("130", "MVSep Rhodes"),
+	("132", "MVSep Clavinet"),
+	("133", "MVSep Mellotron"),
+	("30", "MVSep Guitar (guitar, other)"),
+	("65", "MVSep Acoustic Guitar (acoustic-guitar, other)"),
+	("79", "MVSep Electric Guitar (electric-guitar, other)"),
+	("98", "MVSep Lead/Rhythm Guitar (lead-guitar, rhythm-guitar)"),
+	("122", "MVSep Pedal Steel Guitar"),
+	("99", "MVSep Plucked Strings (plucked-strings, other)"),
+	("71", "MVSep Harp (harp, other)"),
+	("73", "MVSep Mandolin (mandolin, other)"),
+	("81", "MVSep Banjo (banjo, other)"),
+	("88", "MVSep Sitar (sitar, other)"),
+	("94", "MVSep Ukulele (ukulele, other)"),
+	("95", "MVSep Dobro (dobro, other)"),
+	("51", "MVSep Bowed Strings (strings, other)"),
+	("64", "MVSep Violin (violin, other)"),
+	("67", "MVSep Viola (viola, other)"),
+	("68", "MVSep Cello (cello, other)"),
+	("72", "MVSep Double Bass (double-bass, other)"),
+	("53", "MVSep Wind (wind, other)"),
+	("105", "MVSep Brass (brass, other)"),
+	("106", "MVSep Woodwind (woodwind, other)"),
+	("60", "MVSep Saxophone (saxophone, other)"),
+	("66", "MVSep Flute (flute, other)"),
+	("69", "MVSep Trumpet (trumpet, other)"),
+	("74", "MVSep Trombone (trombone, other)"),
+	("76", "MVSep Oboe (oboe, other)"),
+	("77", "MVSep Clarinet (clarinet, other)"),
+	("80", "MVSep French Horn (french-horn, other)"),
+	("85", "MVSep Harmonica (harmonica, other)"),
+	("90", "MVSep Tuba (tuba, other)"),
+	("91", "MVSep Bassoon (bassoon, other)"),
+	("114", "MVSep Bagpipes (bagpipes , other)"),
+	("131", "MVSep Whistle"),
+	("103", "MVSep Percussion (percussion, other)"),
+	("75", "MVSep Tambourine (tambourine, other)"),
+	("82", "MVSep Marimba (marimba, other)"),
+	("83", "MVSep Glockenspiel (glockenspiel, other)"),
+	("84", "MVSep Timpani (timpani, other)"),
+	("87", "MVSep Triangle (triangle, other)"),
+	("92", "MVSep Congas (congas , other)"),
+	("93", "MVSep Bells (bells, other)"),
+	("96", "MVSep Wind Chimes (wind-chimes, other)"),
+	("107", "MVSep Xylophone (xylophone, other)"),
+	("108", "MVSep Celesta (celesta, other)"),
+	("126", "MVSep Clap"),
+	("127", "MVSep Cowbell"),
+]
+
+# 5. All 119 Official MVSEP Algorithms
 ALL_MODELS = [
-	# Vocal & Instrumental Minus Models
-	("40", "BS Roformer (Vocal / Instrumental)"),
-	("48", "MelBand Roformer (Vocal / Instrumental)"),
-	("46", "SCNet (Vocal / Instrumental)"),
-	("25", "MDX23C (Vocal / Instrumental)"),
-	("27", "Demucs4 Vocals 2023 (Vocal / Instrumental)"),
-	("43", "Multichannel BS (Vocal / Instrumental)"),
-	("23", "MDX B (Vocal / Instrumental)"),
-	("9", "UVR VR (Vocal / Music)"),
-	("49", "Karaoke (Lead / Backing Vocals)"),
-	("12", "MDX-B Karaoke (Lead / Backing Vocals)"),
-	("22", "Reverb Removal (De-reverb)"),
-	("57", "Male / Female Voice Separation"),
-	# Multi-stem & Instruments
-	("63", "BS Roformer SW (6 Stems: Vocal, Bass, Drums, Guitar, Piano, Other)"),
-	("20", "Demucs4 HT (4 Stems: Vocal, Drums, Bass, Other)"),
-	("44", "Drums (Drums / Music)"),
-	("41", "Bass (Bass / Music)"),
-	("31", "Guitar (Guitar / Music)"),
-	("29", "Piano (Piano / Music)"),
-	("88", "Synth (Synthesizer / Other)"),
-	("106", "Keys (Keys / Other)"),
-	("52", "Bowed Strings (Strings / Other)"),
-	("54", "Wind (Wind Instruments / Other)"),
-	("107", "Brass (Brass / Other)"),
-	("65", "Violin (Violin / Other)"),
-	("70", "Cello (Cello / Other)"),
-	("66", "Acoustic Guitar"),
-	("81", "Electric Guitar"),
-	("105", "Percussion (Percussion / Other)"),
-	("37", "DrumSep (Kick, Snare, Cymbals, Toms, Hi-Hat)"),
-	# Enhancement & Voice Tools
-	("47", "DeNoise (Noise Reduction)"),
-	("34", "Crowd Removal (Crowd Noise Removal)"),
-	("51", "Apollo Enhancer (Audio Quality Enhancer)"),
-	("59", "AudioSR (Super Resolution)"),
-	("53", "Medley Vox (Multiple Singers Separation)"),
-	("111", "SATB Choir (Soprano, Alto, Tenor, Bass)"),
+	("27", "Ensemble (vocals, instrum)"),
+	("22", "Ensemble (vocals, instrum, bass, drums, other)"),
+	("32", "Ensemble All-In (vocals, bass, drums, piano, guitar, lead/back vocals, other)"),
+	("61", "BS Roformer SW (vocals, bass, drums, guitar, piano, other)"),
+	("21", "Demucs4 HT (vocals, drums, bass, other)"),
+	("39", "BS Roformer (vocals, instrumental)"),
+	("121", "BS PolarFormer (vocals, instrumental)"),
+	("47", "MelBand Roformer (vocals, instrumental)"),
+	("26", "MDX23C (vocals, instrumental)"),
+	("45", "SCNet (vocals, instrumental)"),
+	("24", "MDX B (vocals, instrumental)"),
+	("3", "Ultimate Vocal Remover VR (vocals, music)"),
+	("28", "Demucs4 Vocals 2023 (vocals, instrum)"),
+	("48", "MVSep Karaoke (lead/back vocals)"),
+	("7", "MDX-B Karaoke (lead/back vocals)"),
+	("33", "MVSep Crowd removal (crowd, other)"),
+	("52", "Medley Vox (Multi-singer separation)"),
+	("42", "MVSep Multichannel BS (vocals, instrumental)"),
+	("56", "MVSep Male/Female separation"),
+	("109", "MVSep Choir (choir, other)"),
+	("110", "MVSep SATB Choir (soprano, alto, tenor, bass)"),
+	("43", "MVSep Drums (drums, other)"),
+	("40", "MVSep Bass (bass, other)"),
+	("86", "MVSep Synth (synth, other)"),
+	("36", "DrumSep (4-6 stems: kick, snare, cymbals, toms, ride, hh, crash)"),
+	("29", "MVSep Piano (piano, other)"),
+	("78", "MVSep Digital Piano (digital-piano, other)"),
+	("104", "MVSep Keys (keys, other)"),
+	("57", "MVSep Organ (organ, other)"),
+	("89", "MVSep Harpsichord (harpsichord, other)"),
+	("97", "MVSep Accordion (accordion, other)"),
+	("128", "MVSep Vibraphone"),
+	("129", "MVSep Metal Bars"),
+	("130", "MVSep Rhodes"),
+	("132", "MVSep Clavinet"),
+	("133", "MVSep Mellotron"),
+	("30", "MVSep Guitar (guitar, other)"),
+	("65", "MVSep Acoustic Guitar (acoustic-guitar, other)"),
+	("79", "MVSep Electric Guitar (electric-guitar, other)"),
+	("98", "MVSep Lead/Rhythm Guitar (lead-guitar, rhythm-guitar)"),
+	("122", "MVSep Pedal Steel Guitar"),
+	("99", "MVSep Plucked Strings (plucked-strings, other)"),
+	("71", "MVSep Harp (harp, other)"),
+	("73", "MVSep Mandolin (mandolin, other)"),
+	("81", "MVSep Banjo (banjo, other)"),
+	("88", "MVSep Sitar (sitar, other)"),
+	("94", "MVSep Ukulele (ukulele, other)"),
+	("95", "MVSep Dobro (dobro, other)"),
+	("51", "MVSep Bowed Strings (strings, other)"),
+	("64", "MVSep Violin (violin, other)"),
+	("67", "MVSep Viola (viola, other)"),
+	("68", "MVSep Cello (cello, other)"),
+	("72", "MVSep Double Bass (double-bass, other)"),
+	("53", "MVSep Wind (wind, other)"),
+	("105", "MVSep Brass (brass, other)"),
+	("106", "MVSep Woodwind (woodwind, other)"),
+	("60", "MVSep Saxophone (saxophone, other)"),
+	("66", "MVSep Flute (flute, other)"),
+	("69", "MVSep Trumpet (trumpet, other)"),
+	("74", "MVSep Trombone (trombone, other)"),
+	("76", "MVSep Oboe (oboe, other)"),
+	("77", "MVSep Clarinet (clarinet, other)"),
+	("80", "MVSep French Horn (french-horn, other)"),
+	("85", "MVSep Harmonica (harmonica, other)"),
+	("90", "MVSep Tuba (tuba, other)"),
+	("91", "MVSep Bassoon (bassoon, other)"),
+	("114", "MVSep Bagpipes (bagpipes , other)"),
+	("131", "MVSep Whistle"),
+	("103", "MVSep Percussion (percussion, other)"),
+	("75", "MVSep Tambourine (tambourine, other)"),
+	("82", "MVSep Marimba (marimba, other)"),
+	("83", "MVSep Glockenspiel (glockenspiel, other)"),
+	("84", "MVSep Timpani (timpani, other)"),
+	("87", "MVSep Triangle (triangle, other)"),
+	("92", "MVSep Congas (congas , other)"),
+	("93", "MVSep Bells (bells, other)"),
+	("96", "MVSep Wind Chimes (wind-chimes, other)"),
+	("107", "MVSep Xylophone (xylophone, other)"),
+	("108", "MVSep Celesta (celesta, other)"),
+	("126", "MVSep Clap"),
+	("127", "MVSep Cowbell"),
+	("25", "MVSep Demucs4HT DNR (speech, music, effects)"),
+	("35", "BandIt Plus (speech, music, effects)"),
+	("44", "BandIt v2 (speech, music, effects)"),
+	("55", "MVSep DnR v3 (speech, music, effects)"),
+	("115", "MVSep Braam"),
+	("123", "MVSep Risers"),
+	("119", "MVSep FX"),
+	("50", "Apollo Enhancers (by JusperLee, Lew, baicai1145)"),
+	("23", "Reverb Removal (noreverb)"),
+	("46", "DeNoise by aufr33 and gabox"),
+	("58", "AudioSR (Super Resolution)"),
+	("59", "FlashSR (Super Resolution)"),
+	("38", "Whisper (extract text from audio)"),
+	("63", "Parakeet (extract text from audio)"),
+	("101", "VibeVoice (Voice Cloning)"),
+	("118", "Qwen3-TTS (Voice Cloning)"),
+	("124", "Mega 53-stem Model"),
+	("41", "MVSep MultiSpeaker (MDX23C)"),
+	("49", "Aspiration (by Sucial)"),
+	("54", "Phantom Centre extraction"),
+	("100", "SOME (Singing-Oriented MIDI Extractor)"),
+	("111", "Transkun (Piano -> MIDI)"),
+	("112", "Basic Pitch (MIDI Extraction)"),
+	("125", "ADTOF Plus (Drums -> MIDI)"),
+	("1", "Demucs3 Model (vocals, drums, bass, other)"),
+	("2", "MDX A/B (vocals, drums, bass, other)"),
+	("31", "Vit Large 23 (vocals, instrum)"),
+	("4", "UVRv5 Demucs (vocals, music)"),
+	("5", "MVSep DNR (music, sfx, speech)"),
+	("6", "MVSep Old Vocal Model (vocals, music)"),
+	("8", "Demucs2 (vocals, drums, bass, other)"),
+	("9", "Danna Sep (vocals, drums, bass, other)"),
+	("10", "Byte Dance (vocals, drums, bass, other)"),
+	("34", "MVSep MelBand Roformer (vocals, instrum)"),
+	("11", "spleeter"),
+	("14", "UnMix"),
+	("18", "Zero Shot (Query Based) (Low quality)"),
+	("37", "LarsNet (kick, snare, cymbals, toms, hihat)"),
 ]
 
-DEFAULT_FAVORITES = ["40", "48", "49", "25", "22"]
+
+# 3-Language Model Name Translations (UZ, RU, EN)
+MODEL_TRANSLATIONS = {
+	"uz": {
+		"39": "BS Roformer (Vokal va instrumental minus) ⭐ Eng yuqori sifat",
+		"47": "MelBand Roformer (Vokal va instrumental minus)",
+		"121": "BS PolarFormer (Vokal va instrumental minus)",
+		"45": "SCNet (Vokal va instrumental minus)",
+		"26": "MDX23C (Vokal va instrumental minus)",
+		"24": "MDX B (Vokal va instrumental minus)",
+		"28": "Demucs4 Vocals 2023 (Vokal va instrumental)",
+		"3": "Ultimate Vocal Remover VR (Vokal va musiqa)",
+		"48": "MVSep Karaoke (Asosiy vokal va bek-vokal)",
+		"7": "MDX-B Karaoke (Asosiy vokal va bek-vokal)",
+		"42": "MVSep Ko'p kanalli BS (Vokal va instrumental)",
+		"56": "MVSep Erkak va ayol ovozini ajratish",
+		"52": "Medley Vox (Bir nechta ijrochilar ovozini ajratish)",
+		"109": "MVSep Xor (Xor va boshqa tovushlar)",
+		"110": "MVSep SATB Xor (Soprano, alt, tenor, bas)",
+		"27": "Ensemble (Vokal va instrumental ansamble) [Koeff: 2x]",
+		"22": "Ensemble 4x (Vokal, instrumental, bas, baraban) [Koeff: 4x]",
+		"32": "Ensemble All-In (Vokal, bas, baraban, pianino, gitara, bek-vokal) [Koeff: 6x]",
+		"61": "BS Roformer SW (6 ta trek: vokal, bas, baraban, gitara, pianino)",
+		"21": "Demucs4 HT (4 ta trek: vokal, baraban, bas, musiqa)",
+		"124": "Mega 53-trekli Universal Model",
+		"46": "DeNoise - Shovqindan tozalash (aufr33 va gabox)",
+		"23": "Reverb Removal - Aks-sado va exoni yo'qotish",
+		"50": "Apollo Enhancers - Ovoz sifatini tiklash va oshirish",
+		"58": "AudioSR - Yuqori chastota va sifat tiklash",
+		"59": "FlashSR - Tezkor audio rezolyutsiya oshirish",
+		"33": "MVSep Crowd - Olomon shovqinini tozalash",
+		"25": "MVSep Demucs4HT DNR (Nutq, musiqa va effektlarni ajratish)",
+		"35": "BandIt Plus (Nutq, musiqa va effektlar)",
+		"44": "BandIt v2 (Nutq, musiqa va effektlar)",
+		"55": "MVSep DnR v3 (Nutq, musiqa va effektlar)",
+		"115": "MVSep Braam",
+		"123": "MVSep Risers",
+		"119": "MVSep FX",
+		"43": "MVSep Baraban (Baraban va boshqa musiqalar)",
+		"40": "MVSep Bas (Bas gitara va boshqa musiqalar)",
+		"86": "MVSep Sintezator (Elektron sintezator)",
+		"36": "DrumSep (Baraban qismlari: bochka, ishchi, tarelka, tom)",
+		"29": "MVSep Pianino (Pianino va boshqa musiqalar)",
+		"78": "MVSep Raqamli Pianino (Elektron pianino)",
+		"104": "MVSep Klavishlar (Klavishli asboblar)",
+		"57": "MVSep Organ (Organ musiqiy asbobi)",
+		"89": "MVSep Klavesin (Klassik klavesin)",
+		"97": "MVSep Akkordeon",
+		"128": "MVSep Vibrafon",
+		"129": "MVSep Metall Tillar",
+		"130": "MVSep Rhodes Pianino",
+		"132": "MVSep Klavinet",
+		"133": "MVSep Mellotron",
+		"30": "MVSep Gitara (Gitara va boshqa musiqalar)",
+		"65": "MVSep Akustik Gitara",
+		"79": "MVSep Elektr Gitara",
+		"98": "MVSep Solo va Ritm Gitara",
+		"122": "MVSep Pedal Steel Gitara",
+		"99": "MVSep Chertma Torli Cholg'ular",
+		"71": "MVSep Arfa",
+		"73": "MVSep Mandolina",
+		"81": "MVSep Banjo",
+		"88": "MVSep Sitor",
+		"94": "MVSep Ukulele",
+		"95": "MVSep Dobro",
+		"51": "MVSep Kamonli Torli Cholg'ular (Skripka va torli orkestr)",
+		"64": "MVSep Skripka",
+		"67": "MVSep Alyt",
+		"68": "MVSep Violonchel",
+		"72": "MVSep Kontrabas",
+		"53": "MVSep Damli Cholg'ular (Truba, fleyta va b.)",
+		"105": "MVSep Mis Damli Cholg'ular (Truba, trombon)",
+		"106": "MVSep Yog'och Damli Cholg'ular",
+		"60": "MVSep Saksofon",
+		"66": "MVSep Fleyta",
+		"69": "MVSep Truba",
+		"74": "MVSep Trombon",
+		"76": "MVSep Goboy",
+		"77": "MVSep Klarnet",
+		"80": "MVSep Valtorna",
+		"85": "MVSep Lab garmonikasi",
+		"90": "MVSep Tuba",
+		"91": "MVSep Fagot",
+		"114": "MVSep Volynka (Bagpipes)",
+		"131": "MVSep Hushtak (Whistle)",
+		"103": "MVSep Perkussiya (Zarbli cholg'ular)",
+		"75": "MVSep Tamburin",
+		"82": "MVSep Marimba",
+		"83": "MVSep Glokenshpil",
+		"84": "MVSep Litavra",
+		"87": "MVSep Uchburchak (Triangle)",
+		"92": "MVSep Konga (Congas)",
+		"93": "MVSep Qo'ng'iroqlar (Bells)",
+		"96": "MVSep Shamol Qo'ng'iroqlari",
+		"107": "MVSep Ksilofon",
+		"108": "MVSep Chelesta",
+		"126": "MVSep Qarsak (Clap)",
+		"127": "MVSep Qo'ng'iroqcha (Cowbell)"
+	},
+	"ru": {
+		"39": "BS Roformer (Вокал и инструментал минус) ⭐ Лучшее качество",
+		"47": "MelBand Roformer (Вокал и инструментал минус)",
+		"121": "BS PolarFormer (Вокал и инструментал минус)",
+		"45": "SCNet (Вокал и инструментал минус)",
+		"26": "MDX23C (Вокал и инструментал минус)",
+		"24": "MDX B (Вокал и инструментал минус)",
+		"28": "Demucs4 Vocals 2023 (Вокал и инструментал)",
+		"3": "Ultimate Vocal Remover VR (Вокал и музыка)",
+		"48": "MVSep Karaoke (Основной вокал и бэк-вокал)",
+		"7": "MDX-B Karaoke (Основной вокал и бэк-вокал)",
+		"42": "MVSep Многоканальный BS (Вокал и инструментал)",
+		"56": "MVSep Разделение мужского и женского голоса",
+		"52": "Medley Vox (Разделение нескольких исполнителей)",
+		"109": "MVSep Хор (Хор и прочее)",
+		"110": "MVSep SATB Хор (Сопрано, альт, тенор, бас)",
+		"27": "Ensemble (Вокал и инструментал ансамбль) [Коэфф: 2x]",
+		"22": "Ensemble 4x (Вокал, инструментал, бас, ударные) [Коэфф: 4x]",
+		"32": "Ensemble All-In (Вокал, бас, ударные, пианино, гитара, бэк-вокал) [Коэфф: 6x]",
+		"61": "BS Roformer SW (6 дорожек: вокал, бас, ударные, гитара, пианино)",
+		"21": "Demucs4 HT (4 дорожки: вокал, ударные, бас, другое)",
+		"124": "Mega 53-дорожечная Универсальная Модель",
+		"46": "DeNoise - Очистка от шума (aufr33 и gabox)",
+		"23": "Reverb Removal - Удаление эха и реверберации",
+		"50": "Apollo Enhancers - Восстановление и улучшение качества",
+		"58": "AudioSR - Восстановление высоких частот (Super Resolution)",
+		"59": "FlashSR - Быстрое повышение разрешения звука",
+		"33": "MVSep Crowd - Удаление шума толпы",
+		"25": "MVSep Demucs4HT DNR (Речь, музыка, эффекты)",
+		"35": "BandIt Plus (Речь, музыка, эффекты)",
+		"44": "BandIt v2 (Речь, музыка, эффекты)",
+		"55": "MVSep DnR v3 (Речь, музыка, эффекты)",
+		"115": "MVSep Braam",
+		"123": "MVSep Risers",
+		"119": "MVSep FX",
+		"43": "MVSep Ударные (Барабаны и прочее)",
+		"40": "MVSep Бас (Бас-гитара и прочее)",
+		"86": "MVSep Синтезатор",
+		"36": "DrumSep (Элементы ударных: бочка, малый, тарелки, томы)",
+		"29": "MVSep Фортепиано (Пианино и прочее)",
+		"78": "MVSep Цифровое пианино",
+		"104": "MVSep Клавишные",
+		"57": "MVSep Орган",
+		"89": "MVSep Клавесин",
+		"97": "MVSep Аккордеон",
+		"128": "MVSep Вибрафон",
+		"129": "MVSep Металлические пластины",
+		"130": "MVSep Родес-пиано",
+		"132": "MVSep Клавинет",
+		"133": "MVSep Меллотрон",
+		"30": "MVSep Гитара (Гитара и прочее)",
+		"65": "MVSep Акустическая гитара",
+		"79": "MVSep Электрогитара",
+		"98": "MVSep Соло и ритм-гитара",
+		"122": "MVSep Педальная слайд-гитара",
+		"99": "MVSep Щипковые струнные",
+		"71": "MVSep Арфа",
+		"73": "MVSep Мандолина",
+		"81": "MVSep Банджо",
+		"88": "MVSep Ситар",
+		"94": "MVSep Укулеле",
+		"95": "MVSep Добро",
+		"51": "MVSep Смычковые струнные (Скрипки и струнный оркестр)",
+		"64": "MVSep Скрипка",
+		"67": "MVSep Альт",
+		"68": "MVSep Виолончель",
+		"72": "MVSep Контрабас",
+		"53": "MVSep Духовые инструменты",
+		"105": "MVSep Медные духовые (Труба, тромбон)",
+		"106": "MVSep Деревянные духовые",
+		"60": "MVSep Саксофон",
+		"66": "MVSep Флейта",
+		"69": "MVSep Труба",
+		"74": "MVSep Тромбон",
+		"76": "MVSep Гобой",
+		"77": "MVSep Кларнет",
+		"80": "MVSep Валторна",
+		"85": "MVSep Губная гармоника",
+		"90": "MVSep Туба",
+		"91": "MVSep Фагот",
+		"114": "MVSep Волынка",
+		"131": "MVSep Свисток",
+		"103": "MVSep Перкуссия (Ударные инструменты)",
+		"75": "MVSep Тамбурин",
+		"82": "MVSep Маримба",
+		"83": "MVSep Глокеншпиль",
+		"84": "MVSep Литавры",
+		"87": "MVSep Треугольник",
+		"92": "MVSep Конги",
+		"93": "MVSep Колокольчики",
+		"96": "MVSep Музыка ветра",
+		"107": "MVSep Ксилофон",
+		"108": "MVSep Челеста",
+		"126": "MVSep Хлопки (Clap)",
+		"127": "MVSep Ковбелл"
+	},
+	"en": {
+		"39": "BS Roformer (Vocal / Instrumental Minus) ⭐ Best Quality",
+		"47": "MelBand Roformer (Vocal / Instrumental Minus)",
+		"121": "BS PolarFormer (Vocal / Instrumental Minus)",
+		"45": "SCNet (Vocal / Instrumental Minus)",
+		"26": "MDX23C (Vocal / Instrumental Minus)",
+		"24": "MDX B (Vocal / Instrumental Minus)",
+		"28": "Demucs4 Vocals 2023 (Vocals / Instrumental)",
+		"3": "Ultimate Vocal Remover VR (Vocals / Music)",
+		"48": "MVSep Karaoke (Lead / Backing Vocals)",
+		"7": "MDX-B Karaoke (Lead / Backing Vocals)",
+		"42": "MVSep Multichannel BS (Vocals / Instrumental)",
+		"56": "MVSep Male / Female Voice Separation",
+		"52": "Medley Vox (Multi-singer Separation)",
+		"109": "MVSep Choir (Choir / Other)",
+		"110": "MVSep SATB Choir (Soprano, Alto, Tenor, Bass)",
+		"27": "Ensemble (Vocals / Instrumental Ensemble) [Coeff: 2x]",
+		"22": "Ensemble 4x (Vocals, Instrumental, Bass, Drums) [Coeff: 4x]",
+		"32": "Ensemble All-In (Vocals, Bass, Drums, Piano, Guitar, Backing) [Coeff: 6x]",
+		"61": "BS Roformer SW (6 Stems: Vocal, Bass, Drums, Guitar, Piano, Other)",
+		"21": "Demucs4 HT (4 Stems: Vocal, Drums, Bass, Other)",
+		"124": "Mega 53-stem Universal Model",
+		"46": "DeNoise - Noise Reduction (aufr33 & gabox)",
+		"23": "Reverb Removal - De-reverb (Echo Removal)",
+		"50": "Apollo Enhancers - Audio Quality Restoration",
+		"58": "AudioSR - Super Resolution Audio Restoration",
+		"59": "FlashSR - Fast Audio Super Resolution",
+		"33": "MVSep Crowd - Crowd Noise Removal",
+		"25": "MVSep Demucs4HT DNR (Speech, Music, Effects)",
+		"35": "BandIt Plus (Speech, Music, Effects)",
+		"44": "BandIt v2 (Speech, Music, Effects)",
+		"55": "MVSep DnR v3 (Speech, Music, Effects)",
+		"115": "MVSep Braam",
+		"123": "MVSep Risers",
+		"119": "MVSep FX",
+		"43": "MVSep Drums (Drums / Music)",
+		"40": "MVSep Bass (Bass Guitar / Music)",
+		"86": "MVSep Synthesizer",
+		"36": "DrumSep (Kick, Snare, Cymbals, Toms, Hi-Hat)",
+		"29": "MVSep Piano (Piano / Music)",
+		"78": "MVSep Digital Piano",
+		"104": "MVSep Keys",
+		"57": "MVSep Organ",
+		"89": "MVSep Harpsichord",
+		"97": "MVSep Accordion",
+		"128": "MVSep Vibraphone",
+		"129": "MVSep Metal Bars",
+		"130": "MVSep Rhodes Piano",
+		"132": "MVSep Clavinet",
+		"133": "MVSep Mellotron",
+		"30": "MVSep Guitar (Guitar / Music)",
+		"65": "MVSep Acoustic Guitar",
+		"79": "MVSep Electric Guitar",
+		"98": "MVSep Lead & Rhythm Guitar",
+		"122": "MVSep Pedal Steel Guitar",
+		"99": "MVSep Plucked Strings",
+		"71": "MVSep Harp",
+		"73": "MVSep Mandolin",
+		"81": "MVSep Banjo",
+		"88": "MVSep Sitar",
+		"94": "MVSep Ukulele",
+		"95": "MVSep Dobro",
+		"51": "MVSep Bowed Strings (Violin & Orchestra Strings)",
+		"64": "MVSep Violin",
+		"67": "MVSep Viola",
+		"68": "MVSep Cello",
+		"72": "MVSep Double Bass",
+		"53": "MVSep Wind Instruments",
+		"105": "MVSep Brass (Trumpet, Trombone, Horn)",
+		"106": "MVSep Woodwind",
+		"60": "MVSep Saxophone",
+		"66": "MVSep Flute",
+		"69": "MVSep Trumpet",
+		"74": "MVSep Trombone",
+		"76": "MVSep Oboe",
+		"77": "MVSep Clarinet",
+		"80": "MVSep French Horn",
+		"85": "MVSep Harmonica",
+		"90": "MVSep Tuba",
+		"91": "MVSep Bassoon",
+		"114": "MVSep Bagpipes",
+		"131": "MVSep Whistle",
+		"103": "MVSep Percussion",
+		"75": "MVSep Tambourine",
+		"82": "MVSep Marimba",
+		"83": "MVSep Glockenspiel",
+		"84": "MVSep Timpani",
+		"87": "MVSep Triangle",
+		"92": "MVSep Congas",
+		"93": "MVSep Bells",
+		"96": "MVSep Wind Chimes",
+		"107": "MVSep Xylophone",
+		"108": "MVSep Celesta",
+		"126": "MVSep Clap",
+		"127": "MVSep Cowbell"
+	}
+}
+
+DEFAULT_FAVORITES = ["39", "47", "45", "48", "27", "23"]
 
 
-def get_minus_models_list():
-	"""Returns list of (id, original_name) for minus models."""
-	return list(MINUS_MODELS)
-
-
-def get_all_models_list():
-	"""Returns list of (id, original_name) for all models."""
-	return list(ALL_MODELS)
-
-
-def get_model_title(model_id):
-	"""Find title for a model ID."""
-	for m_id, name in MINUS_MODELS:
-		if str(m_id) == str(model_id):
-			return name
+def get_model_title(model_id, lang=None, translated=None):
+	"""Find title for a model ID across all models, with optional translation."""
+	mid_str = str(model_id)
+	
+	if translated is None:
+		try:
+			from .config_manager import config
+			translated = config.get("translate_models", False)
+		except Exception:
+			translated = False
+			
+	if translated:
+		if lang is None:
+			try:
+				from .i18n import get_current_language
+				lang = get_current_language()
+			except Exception:
+				lang = "uz"
+		trans_dict = MODEL_TRANSLATIONS.get(lang, MODEL_TRANSLATIONS.get("uz", {}))
+		if mid_str in trans_dict:
+			return trans_dict[mid_str]
+			
 	for m_id, name in ALL_MODELS:
-		if str(m_id) == str(model_id):
+		if str(m_id) == mid_str:
+			return name
+	for m_id, name in MINUS_MODELS:
+		if str(m_id) == mid_str:
+			return name
+	for m_id, name in PREMIUM_MODELS:
+		if str(m_id) == mid_str:
 			return name
 	return f"Model {model_id}"
+
+
+def get_premium_models_list(translated=None, lang=None):
+	"""Returns list of (id, display_name) for premium models."""
+	res = []
+	for mid, _ in PREMIUM_MODELS:
+		res.append((mid, get_model_title(mid, lang=lang, translated=translated)))
+	return res
+
+
+def get_minus_models_list(translated=None, lang=None):
+	"""Returns list of (id, display_name) for minus models."""
+	res = []
+	for mid, _ in MINUS_MODELS:
+		res.append((mid, get_model_title(mid, lang=lang, translated=translated)))
+	return res
+
+
+def get_enhance_models_list(translated=None, lang=None):
+	"""Returns list of (id, display_name) for enhancement models."""
+	res = []
+	for mid, _ in ENHANCE_MODELS:
+		res.append((mid, get_model_title(mid, lang=lang, translated=translated)))
+	return res
+
+
+def get_instrument_models_list(translated=None, lang=None):
+	"""Returns list of (id, display_name) for instrument models."""
+	res = []
+	for mid, _ in INSTRUMENT_MODELS:
+		res.append((mid, get_model_title(mid, lang=lang, translated=translated)))
+	return res
+
+
+def get_all_models_list(translated=None, lang=None):
+	"""Returns list of (id, display_name) for all models."""
+	res = []
+	for mid, _ in ALL_MODELS:
+		res.append((mid, get_model_title(mid, lang=lang, translated=translated)))
+	return res

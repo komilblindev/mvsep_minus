@@ -6,3 +6,5 @@ __pycache__/
 Thumbs.db
 shams_bot_full.py
 dist/
+*.nvda-addon
+*.log

@@ -1,44 +1,107 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>MVSEP Создатель Минусов - Руководство</title>
-    <style>
-        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 20px auto; padding: 0 10px; }
-        h1, h2, h3 { color: #005a9c; }
-        code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
-        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background: #f2f2f2; }
-    </style>
+<meta charset="utf-8">
+<title>Создатель минусовок MVSEP - Дополнение для NVDA</title>
+<style>
+body { font-family: sans-serif; line-height: 1.6; margin: 2em; max-width: 850px; color: #222; }
+h1, h2, h3, h4 { color: #005a9c; }
+code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: Consolas, monospace; }
+ul { margin-bottom: 1.2em; }
+li { margin-bottom: 0.4em; }
+hr { border: 0; border-top: 1px solid #ddd; margin: 2em 0; }
+a { color: #0066cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.warning { background: #fff3cd; border-left: 5px solid #ffeeba; padding: 12px; margin: 15px 0; border-radius: 4px; }
+</style>
 </head>
 <body>
-    <h1>MVSEP Создатель Минусов (Дополнение NVDA)</h1>
-    <p>Специальное дополнение NVDA для удаления вокала и создания профессиональных <strong>минусовок (инструменталов)</strong> из аудиофайлов.</p>
-    
-    <h2>Основные возможности</h2>
-    <ul>
-        <li><strong>Фокус на создании минусов:</strong> BS Roformer, MelBand Roformer, SCNet, MDX23C, Karaoke, Удаление реверберации и др.</li>
-        <li><strong>Система кредитов:</strong> Озвучивание списанных и оставшихся кредитов при создании минуса.</li>
-        <li><strong>Избранные модели:</strong> Быстрый выбор часто используемых моделей (⭐).</li>
-        <li><strong>Все модели:</strong> Доступ ко всем 35+ моделям MVSEP.</li>
-        <li><strong>Без локального FFmpeg:</strong> Обработка происходит на облачных GPU серверах MVSEP.</li>
-        <li><strong>Звуковые сигналы прогресса:</strong> Аудио обратная связь с повышением тона от 220 Гц до 1760 Гц.</li>
-    </ul>
+<h1>Создатель минусовок MVSEP - Дополнение для NVDA</h1>
+<p>Специализированное дополнение для программы экранного доступа NVDA, предназначенное для качественного удаления вокала из аудиофайлов и создания <strong>минусовок / инструменталов</strong> профессионального уровня. Дополнение полностью интегрировано с официальным облачным API <a href="https://mvsep.com/full_api">MVSEP.com</a>.</p>
 
-    <h2>Горячие клавиши</h2>
-    <table>
-        <tr><th>Клавиши</th><th>Действие</th></tr>
-        <tr><td><code>NVDA + Alt + M</code></td><td>Создать минус (автоопределение выбранного аудиофайла в Проводнике)</td></tr>
-        <tr><td><code>NVDA + Alt + K</code></td><td>Озвучить остаток кредитов на аккаунте MVSEP</td></tr>
-        <tr><td><code>NVDA + Alt + Shift + M</code></td><td>Открыть настройки MVSEP</td></tr>
-    </table>
-    <p><em>Примечание:</em> Все горячие клавиши можно переназначить в <code>Параметры NVDA -> Жесты ввода</code>.</p>
+<hr>
 
-    <h2>Разработчик и Контакты</h2>
-    <p><strong>Разработчик:</strong> Комил Хамзаев<br>
-    <strong>Email:</strong> <a href="mailto:hamzayevkomil52@gmail.com">hamzayevkomil52@gmail.com</a><br>
-    <strong>Telegram Канал:</strong> <a href="https://t.me/it_help_uz">@it_help_uz</a><br>
-    <strong>GitHub Репозиторий:</strong> <a href="https://github.com/komilblindev/mvsep_minus">github.com/komilblindev/mvsep_minus</a></p>
+<h2>📖 Руководство пользователя (Пошаговая инструкция)</h2>
+
+<h3>Шаг 1: Подключение учетной записи и получение API-ключа</h3>
+<p>Для работы дополнения требуется бесплатный персональный API-ключ MVSEP.</p>
+
+<div class="warning">
+<strong>⚠️ ВНИМАНИЕ: Проблема с доставкой писем подтверждения на почту!</strong><br>
+В связи с особенностями почтовых серверов MVSEP, при обычной регистрации по email письмо со ссылкой подтверждения часто задерживается или вовсе не доставляется почтовыми сервисами (возникает статус <code>Pending email verification</code>).<br><br>
+<strong>Самый надежный, безошибочный и быстрый способ (за 1 минуту):</strong>
+<ol>
+  <li>Откройте <code>Меню NVDA -&gt; Параметры -&gt; Настройки -&gt; MVSEP Minus</code>;</li>
+  <li>Нажмите кнопку «Войти в систему...» или «Регистрация...»;</li>
+  <li>В открывшемся диалоге нажмите кнопку <strong>«Получить через Google / Сайт (Открыть в браузере)»</strong>;</li>
+  <li>На открывшейся странице MVSEP нажмите <strong>«Sign in with Google»</strong> (Войти через Google);</li>
+  <li>На странице (<code>https://mvsep.com/full_api</code>) отобразится ваш готовый <strong>API Token</strong>, скопируйте его (<code>Ctrl + C</code>);</li>
+  <li>Вставьте ключ в поле <strong>«Ключ MVSEP API»</strong> в настройках дополнения и нажмите <strong>«Проверить ключ API»</strong>.</li>
+</ol>
+</div>
+
+<h3>Шаг 2: Создание минусовки (Основной режим)</h3>
+<ol>
+  <li>Выберите в меню: <code>Меню NVDA -&gt; Сервис -&gt; MVSEP: Разделение музыки (Создание минуса)...</code>;</li>
+  <li>Укажите аудиофайл или вставьте ссылку;</li>
+  <li>Выберите модель (рекомендуется <code>BS Roformer</code> ⭐);</li>
+  <li>Выберите формат (MP3, WAV, FLAC);</li>
+  <li>Нажмите <strong>«Начать разделение»</strong>. Результат сохранится в <code>Загрузки/MVSEP_Minus</code>.</li>
+</ol>
+
+<h3>Шаг 3: Быстрое фоновое разделение</h3>
+<p>Выделите файл в Проводнике и нажмите горячую клавишу для мгновенного запуска в фоне.</p>
+
+<h3>Шаг 4: История разделений на сайте</h3>
+<p>Кнопка <strong>«История разделений на сайте...»</strong> в настройках позволяет скачивать прошлые треки напрямую.</p>
+
+<hr>
+
+<h2>🌟 Основные возможности</h2>
+<ul>
+  <li><strong>Multi-Account</strong>: Управление несколькими аккаунтами;</li>
+  <li><strong>Failover</strong>: Автопереключение на резервный аккаунт при исчерпании лимитов;</li>
+  <li><strong>Очередь сервера</strong>: Проверка загрузки серверов;</li>
+  <li><strong>Разделение по URL</strong>: Google Drive, Dropbox, MEGA и прямые ссылки;</li>
+  <li><strong>Журнал ошибок</strong>: Запись в <code>mvsep_errors.txt</code> и отправка разработчику;</li>
+  <li><strong>Не требуется FFmpeg</strong>;</li>
+  <li><strong>3 языка</strong>: Узбекский, русский и английский.</li>
+</ul>
+
+<hr>
+
+<h2>🎧 Модели искусственного интеллекта</h2>
+<p>В дополнение включены более 35 лучших моделей и все <strong>119 официальных алгоритмов MVSEP</strong>:</p>
+<ul>
+  <li><strong>Минусовки и вокал</strong>: <code>BS Roformer</code> ⭐, <code>MelBand Roformer</code>, <code>SCNet Large</code>, <code>MDX23C</code>, <code>Demucs v4 HT</code>, <code>Karaoke (Backing vocals)</code>, <code>Medley Vox</code>, <code>Choir &amp; SATB</code>;</li>
+  <li><strong>Премиум-ансамбли</strong>: <code>Ensemble 2x/4x/6x</code>, <code>BS Roformer SW (6 stems)</code>, <code>Mega 53-stem</code>;</li>
+  <li><strong>Очистка звука</strong>: <code>Reverb Removal</code>, <code>DeNoise</code>, <code>Apollo Enhancers</code>, <code>AudioSR / FlashSR</code>, <code>Crowd Removal</code>, <code>BandIt Plus &amp; DnR v3</code>;</li>
+  <li><strong>Инструменты</strong>: Ударные, пианино, бас, гитара, скрипка, духовые и перкуссия.</li>
+</ul>
+
+<hr>
+
+<h2>⌨️ Жесты управления</h2>
+<p>Назначьте удобные горячие клавиши в меню:<br>
+<code>Меню NVDA -&gt; Параметры -&gt; Жесты ввода -&gt; Создатель минусовок MVSEP</code>.</p>
+
+<hr>
+
+<h2>⚙️ Совместимость</h2>
+<ul>
+  <li><strong>Версии NVDA</strong>: от 2019.3 до 2026.2;</li>
+  <li><strong>Python</strong>: Python 3.7 — Python 3.13+;</li>
+  <li><strong>Внешние библиотеки</strong>: Не требуются.</li>
+</ul>
+
+<hr>
+
+<h2>📄 Лицензия и авторство</h2>
+<ul>
+  <li><strong>Лицензия</strong>: GNU General Public License v2.0 (GPL-2.0);</li>
+  <li><strong>Разработчик</strong>: Комил Хамзаев (<a href="mailto:hamzayevkomil52@gmail.com">hamzayevkomil52@gmail.com</a>);</li>
+  <li><strong>Telegram</strong>: <a href="https://t.me/it_help_uz">@it_help_uz</a>;</li>
+  <li><strong>GitHub</strong>: <a href="https://github.com/komilblindev/mvsep_minus">github.com/komilblindev/mvsep_minus</a>.</li>
+</ul>
 </body>
 </html>

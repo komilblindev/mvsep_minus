@@ -25,6 +25,10 @@ MVSEP_CREATE_URL = "https://mvsep.com/api/separation/create"
 MVSEP_GET_URL = "https://mvsep.com/api/separation/get"
 MVSEP_USER_URL = "https://mvsep.com/api/app/user"
 MVSEP_CANCEL_URL = "https://mvsep.com/api/separation/cancel"
+MVSEP_LOGIN_URL = "https://mvsep.com/api/app/login"
+MVSEP_REGISTER_URL = "https://mvsep.com/api/app/register"
+MVSEP_QUEUE_URL = "https://mvsep.com/api/app/queue"
+MVSEP_HISTORY_URL = "https://mvsep.com/api/app/separation_history"
 
 
 def _create_ssl_context():
@@ -86,25 +90,86 @@ def test_api_token(api_token):
 	return False, res
 
 
-def create_separation(api_token, file_path, sep_type="40", output_format="0", progress_callback=None, cancel_event=None):
+def create_separation(api_token, file_path=None, audio_url=None, sep_type="40", output_format="0", progress_callback=None, cancel_event=None):
 	"""
-	Uploads audiofile directly to MVSEP separation API using multipart/form-data.
+	Uploads audiofile directly to MVSEP separation API using multipart/form-data,
+	OR provides remote audio URL via form-data.
 	Reports upload progress via progress_callback(percentage).
 	Returns {"hash": hash_string} or raises Exception.
 	"""
-	if not os.path.isfile(file_path):
-		raise FileNotFoundError(f"File not found: {file_path}")
+	if not file_path and not audio_url:
+		raise ValueError("Either file_path or audio_url must be provided.")
 	
-	file_size = os.path.getsize(file_path)
-	file_name = os.path.basename(file_path)
 	boundary = f"----WebKitFormBoundary{uuid.uuid4().hex}"
-	
 	fields = [
 		("api_token", api_token.strip()),
 		("sep_type", str(sep_type)),
 		("output_format", str(output_format)),
 		("is_algo", "0")
 	]
+	if audio_url:
+		u_clean = audio_url.strip()
+		fields.append(("url", u_clean))
+		# Auto-detect remote_type
+		u_lower = u_clean.lower()
+		if "drive.google.com" in u_lower:
+			fields.append(("remote_type", "drive"))
+		elif "dropbox.com" in u_lower:
+			fields.append(("remote_type", "dropbox"))
+		elif "mega.nz" in u_lower:
+			fields.append(("remote_type", "mega"))
+		else:
+			fields.append(("remote_type", "direct"))
+	
+	if audio_url and not file_path:
+		# URL based separation without file upload
+		body = []
+		for k, v in fields:
+			body.append(f"--{boundary}\r\n".encode("utf-8"))
+			body.append(f'Content-Disposition: form-data; name="{k}"\r\n\r\n'.encode("utf-8"))
+			body.append(f"{v}\r\n".encode("utf-8"))
+		body.append(f"--{boundary}--\r\n".encode("utf-8"))
+		body_bytes = b"".join(body)
+		
+		req = urllib.request.Request(
+			MVSEP_CREATE_URL,
+			data=body_bytes,
+			headers={
+				"Content-Type": f"multipart/form-data; boundary={boundary}",
+				"Content-Length": str(len(body_bytes)),
+				"User-Agent": "NVDA-MVSEP-Minus/1.0"
+			},
+			method="POST"
+		)
+		ctx = _create_ssl_context()
+		try:
+			with urllib.request.urlopen(req, context=ctx, timeout=60) as resp:
+				resp_body = resp.read().decode("utf-8", errors="ignore")
+				result = json.loads(resp_body)
+				hash_val = result.get("hash") or (result.get("data", {}).get("hash") if isinstance(result.get("data"), dict) else None)
+				if hash_val:
+					return {"hash": hash_val}
+				err = result.get("error") or result.get("message") or (result.get("data", {}).get("message") if isinstance(result.get("data"), dict) else str(result.get("data")))
+				if any(k in str(err).lower() for k in ["credit", "quota", "limit", "payment"]):
+					raise PermissionError(f"MVSEP_QUOTA_EXCEEDED: {err}")
+				raise ValueError(f"Server error: {err}")
+		except urllib.error.HTTPError as e:
+			err_msg = ""
+			try:
+				err_body = e.read().decode("utf-8", errors="ignore")
+				err_json = json.loads(err_body)
+				err_msg = err_json.get("error") or err_json.get("message") or (err_json.get("data", {}).get("message") if isinstance(err_json.get("data"), dict) else str(err_json.get("data")))
+			except Exception:
+				err_msg = f"HTTP Error {e.code}: {e.reason}"
+			if any(k in str(err_msg).lower() for k in ["credit", "quota", "limit", "payment"]) or e.code in [402, 429]:
+				raise PermissionError(f"MVSEP_QUOTA_EXCEEDED: {err_msg}")
+			raise ValueError(f"Server error ({e.code}): {err_msg}")
+
+	if not os.path.isfile(file_path):
+		raise FileNotFoundError(f"File not found: {file_path}")
+	
+	file_size = os.path.getsize(file_path)
+	file_name = os.path.basename(file_path)
 	
 	body_pre = []
 	for k, v in fields:
@@ -193,10 +258,21 @@ def create_separation(api_token, file_path, sep_type="40", output_format="0", pr
 			if result.get("success") and isinstance(result.get("data"), dict) and result["data"].get("hash"):
 				return {"hash": result["data"]["hash"]}
 			
-			err = result.get("error") or result.get("message") or str(result)
-			if "credit" in str(err).lower() or "quota" in str(err).lower():
-				raise PermissionError("MVSEP_QUOTA_EXCEEDED")
+			err = result.get("error") or result.get("message") or (result.get("data", {}).get("message") if isinstance(result.get("data"), dict) else str(result.get("data"))) or str(result)
+			if any(k in str(err).lower() for k in ["credit", "quota", "limit", "payment"]):
+				raise PermissionError(f"MVSEP_QUOTA_EXCEEDED: {err}")
 			raise ValueError(f"Server error: {err}")
+	except urllib.error.HTTPError as e:
+		err_msg = ""
+		try:
+			body_text = e.read().decode("utf-8", errors="ignore")
+			err_json = json.loads(body_text)
+			err_msg = err_json.get("error") or err_json.get("message") or (err_json.get("data", {}).get("message") if isinstance(err_json.get("data"), dict) else str(err_json.get("data")))
+		except Exception:
+			err_msg = f"HTTP Error {e.code}: {e.reason}"
+		if any(k in str(err_msg).lower() for k in ["credit", "quota", "limit", "payment"]) or e.code in [402, 429]:
+			raise PermissionError(f"MVSEP_QUOTA_EXCEEDED: {err_msg}")
+		raise ValueError(f"Server error ({e.code}): {err_msg}")
 	finally:
 		try:
 			if not stream.file_obj.closed:
@@ -356,3 +432,281 @@ def clean_output_filename(url_or_name, source_song_path, track_role="minus"):
 		if cleaned:
 			return f"{base_name} - {cleaned}"
 		return f"{base_name} - {track_role}{ext}"
+
+
+def login_mvsep(email, password):
+	"""
+	Logs in to MVSEP via POST https://mvsep.com/api/app/login
+	Returns (True, user_dict) or (False, error_message).
+	user_dict contains 'api_token', 'name', 'email', 'premium_minutes', etc.
+	"""
+	if not email or not email.strip():
+		return False, "email_empty"
+	if not password:
+		return False, "password_empty"
+
+	url = MVSEP_LOGIN_URL
+	payload = urllib.parse.urlencode({
+		"email": email.strip(),
+		"password": password
+	}).encode('utf-8')
+
+	headers = {
+		"User-Agent": "NVDA-MVSEP-Minus/1.0",
+		"Content-Type": "application/x-www-form-urlencoded"
+	}
+
+	try:
+		ctx = _create_ssl_context()
+		req = urllib.request.Request(url, data=payload, headers=headers)
+		with urllib.request.urlopen(req, context=ctx, timeout=20) as resp:
+			body = resp.read().decode('utf-8', errors='ignore')
+			data = json.loads(body)
+			if data.get("success") and isinstance(data.get("data"), dict):
+				return True, data["data"]
+			msg = data.get("message") or "Unknown error"
+			return False, str(msg)
+	except urllib.error.HTTPError as e:
+		try:
+			err_body = e.read().decode('utf-8', errors='ignore')
+			err_data = json.loads(err_body)
+			msg = err_data.get("message")
+			if isinstance(msg, dict):
+				lines = []
+				for field_errs in msg.values():
+					if isinstance(field_errs, list):
+						lines.extend([str(x) for x in field_errs])
+					else:
+						lines.append(str(field_errs))
+				return False, "; ".join(lines)
+			elif msg:
+				return False, str(msg)
+		except Exception:
+			pass
+		return False, f"HTTP Error {e.code}"
+	except Exception as e:
+		return False, str(e)
+
+
+def register_mvsep(name, email, password, password_confirmation):
+	"""
+	Registers a new MVSEP account via POST https://mvsep.com/api/app/register
+	Returns (True, success_message) or (False, error_message).
+	"""
+	if not name or not name.strip():
+		return False, "name_empty"
+	if not email or not email.strip():
+		return False, "email_empty"
+	if not password or len(password) < 6:
+		return False, "password_too_short"
+	if password != password_confirmation:
+		return False, "password_mismatch"
+
+	url = MVSEP_REGISTER_URL
+	payload = urllib.parse.urlencode({
+		"name": name.strip(),
+		"email": email.strip(),
+		"password": password,
+		"password_confirmation": password_confirmation
+	}).encode('utf-8')
+
+	headers = {
+		"User-Agent": "NVDA-MVSEP-Minus/1.0",
+		"Content-Type": "application/x-www-form-urlencoded"
+	}
+
+	try:
+		ctx = _create_ssl_context()
+		req = urllib.request.Request(url, data=payload, headers=headers)
+		with urllib.request.urlopen(req, context=ctx, timeout=20) as resp:
+			body = resp.read().decode('utf-8', errors='ignore')
+			data = json.loads(body)
+			if data.get("success"):
+				msg = data.get("message") or "Account created successfully"
+				return True, str(msg)
+			msg = data.get("message") or "Registration failed"
+			return False, str(msg)
+	except urllib.error.HTTPError as e:
+		try:
+			err_body = e.read().decode('utf-8', errors='ignore')
+			err_data = json.loads(err_body)
+			msg = err_data.get("message")
+			if isinstance(msg, dict):
+				lines = []
+				for field_errs in msg.values():
+					if isinstance(field_errs, list):
+						lines.extend([str(x) for x in field_errs])
+					else:
+						lines.append(str(field_errs))
+				return False, "; ".join(lines)
+			elif msg:
+				return False, str(msg)
+		except Exception:
+			pass
+		return False, f"HTTP Error {e.code}"
+	except Exception as e:
+		return False, str(e)
+
+
+def get_account_file_path():
+	"""Returns the path to Downloads/MVSEP_Minus/mvsep_account.txt"""
+	user_profile = os.environ.get('USERPROFILE', os.path.expanduser('~'))
+	downloads_dir = os.path.join(user_profile, 'Downloads')
+	mvsep_dir = os.path.join(downloads_dir, 'MVSEP_Minus')
+	return os.path.join(mvsep_dir, 'mvsep_account.txt')
+
+
+def get_history_file_path():
+	"""Returns the path to Downloads/MVSEP_Minus/mvsep_history.txt"""
+	user_profile = os.environ.get('USERPROFILE', os.path.expanduser('~'))
+	downloads_dir = os.path.join(user_profile, 'Downloads')
+	mvsep_dir = os.path.join(downloads_dir, 'MVSEP_Minus')
+	return os.path.join(mvsep_dir, 'mvsep_history.txt')
+
+
+def save_account_to_downloads(email, password, api_token=None, credits_info=None):
+	"""
+	Saves user credentials to Downloads/MVSEP_Minus/mvsep_account.txt
+	Returns the full path of the saved file, or None if failed.
+	"""
+	try:
+		account_file = get_account_file_path()
+		os.makedirs(os.path.dirname(account_file), exist_ok=True)
+
+		now_str = time.strftime('%Y-%m-%d %H:%M:%S')
+
+		content = [
+			"===================================================================",
+			"       MVSEP MINUS - HISOB VA API MA'LUMOTLARI / ACCOUNT DETAILS   ",
+			"===================================================================",
+			f"Sana / Date: {now_str}",
+			f"Email: {email}",
+			f"Parol / Password: {password}",
+		]
+		if api_token:
+			content.append(f"API Token: {api_token}")
+		if credits_info is not None:
+			content.append(f"Balans / Credits: {credits_info}")
+		content.extend([
+			"",
+			"Rasmiy havolalar / Official Links:",
+			"- Rasmiy sayt / Website: https://mvsep.com",
+			"- API sahifasi / API Page: https://mvsep.com/full_api",
+			"==================================================================="
+		])
+
+		with open(account_file, 'w', encoding='utf-8') as f:
+			f.write("\n".join(content) + "\n")
+
+		return account_file
+	except Exception:
+		return None
+
+
+
+def send_error_to_developer(parent_window=None):
+	"""
+	Reads the last error from mvsep_errors.txt, copies it to clipboard,
+	and opens default email client addressed to hamzayevkomil52@gmail.com.
+	"""
+	from .config_manager import get_errors_file_path
+	from .i18n import _t
+	try:
+		import ui
+	except ImportError:
+		ui = None
+	try:
+		import wx
+	except ImportError:
+		wx = None
+		
+	err_path = get_errors_file_path()
+	err_text = ""
+	if os.path.isfile(err_path):
+		try:
+			with open(err_path, "r", encoding="utf-8") as f:
+				err_lines = f.readlines()
+				err_text = "".join(err_lines[-35:])
+		except Exception:
+			pass
+			
+	if not err_text:
+		err_text = "MVSEP Minus Error Log: No errors recorded yet."
+		
+	if wx:
+		try:
+			if wx.TheClipboard.Open():
+				wx.TheClipboard.SetData(wx.TextDataObject(err_text))
+				wx.TheClipboard.Close()
+		except Exception:
+			pass
+			
+	dev_email = "hamzayevkomil52@gmail.com"
+	subject = urllib.parse.quote("MVSEP Minus - Error Report")
+	body_sample = urllib.parse.quote(err_text[:1000])
+	mailto_url = f"mailto:{dev_email}?subject={subject}&body={body_sample}"
+	
+	try:
+		webbrowser.open(mailto_url)
+	except Exception:
+		try:
+			os.system(f'start "" "{mailto_url}"')
+		except Exception:
+			pass
+			
+	msg = _t("msg_error_sent_opened", email=dev_email)
+	if ui and hasattr(ui, 'message'):
+		ui.message(msg)
+	if parent_window and wx:
+		wx.MessageBox(msg, _t("addon_name"), wx.OK | wx.ICON_INFORMATION, parent_window)
+
+
+def get_server_queue():
+	"""
+	Calls https://mvsep.com/api/app/queue.
+	Returns (True, dict) or (False, error_str).
+	dict structure: {"in_process": int, "premium": int, "free": int, "total": int}
+	"""
+	try:
+		ctx = _create_ssl_context()
+		req = urllib.request.Request(MVSEP_QUEUE_URL, headers={"User-Agent": "NVDA-MVSEP-Minus/1.0"})
+		with urllib.request.urlopen(req, context=ctx, timeout=10) as resp:
+			data = json.loads(resp.read().decode("utf-8", errors="ignore"))
+			q = data.get("queue", {})
+			proc = q.get("in_process", 0)
+			prem = q.get("premium", 0)
+			free = q.get("registered", 0) + q.get("unregistered", 0)
+			return True, {
+				"in_process": proc,
+				"premium": prem,
+				"free": free,
+				"total": proc + prem + free
+			}
+	except Exception as e:
+		return False, str(e)
+
+
+def get_site_separation_history(api_token):
+	"""
+	Calls https://mvsep.com/api/app/separation_history?api_token=...
+	Returns (True, list_of_items) or (False, error_str).
+	"""
+	if not api_token or not api_token.strip():
+		return False, "API token is empty"
+	
+	url = f"{MVSEP_HISTORY_URL}?api_token={urllib.parse.quote(api_token.strip())}"
+	try:
+		ctx = _create_ssl_context()
+		req = urllib.request.Request(url, headers={"User-Agent": "NVDA-MVSEP-Minus/1.0"})
+		with urllib.request.urlopen(req, context=ctx, timeout=15) as resp:
+			data = json.loads(resp.read().decode("utf-8", errors="ignore"))
+			if data.get("success") and isinstance(data.get("data"), list):
+				return True, data["data"]
+			elif data.get("message"):
+				return False, str(data["message"])
+			return True, []
+	except urllib.error.HTTPError as e:
+		return False, f"HTTP Error {e.code}"
+	except Exception as e:
+		return False, str(e)
+

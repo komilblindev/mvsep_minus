@@ -13,7 +13,16 @@ import wx
 import globalPluginHandler
 import gui
 import ui
-from scriptHandler import script
+try:
+	from scriptHandler import script
+except ImportError:
+	# Fallback for very early NVDA 2019.3 if script decorator is not available
+	def script(**kwargs):
+		def decorator(func):
+			for k, v in kwargs.items():
+				setattr(func, k, v)
+			return func
+		return decorator
 
 from .i18n import _t, set_language, format_credit_display
 from .config_manager import config
@@ -26,12 +35,9 @@ from .api_client import test_api_token
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	scriptCategory = _t("addon_name")
 	
-	__gestures__ = {
-		"kb:NVDA+shift+alt+p": "createMinus",
-		"kb:NVDA+shift+alt+c": "checkCredits",
-		"kb:NVDA+shift+alt+m": "openSettings",
-		"kb:NVDA+shift+alt+d": "directMinus",
-	}
+	# No hardcoded default gestures - fully customizable by user via
+	# NVDA Menu -> Preferences -> Input Gestures (Boshqaruv tugmalari).
+	__gestures__ = {}
 	
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
@@ -67,28 +73,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				self.on_menu_create_minus,
 				self.create_minus_item
 			)
-			
-			self.check_credits_item = tools_menu.Append(
-				wx.ID_ANY,
-				_t("menu_check_credits"),
-				_t("menu_check_credits_desc")
-			)
-			gui.mainFrame.sysTrayIcon.Bind(
-				wx.EVT_MENU,
-				self.on_menu_check_credits,
-				self.check_credits_item
-			)
-			
-			self.settings_item = tools_menu.Append(
-				wx.ID_ANY,
-				_t("menu_settings"),
-				_t("menu_settings_desc")
-			)
-			gui.mainFrame.sysTrayIcon.Bind(
-				wx.EVT_MENU,
-				self.on_menu_settings,
-				self.settings_item
-			)
 		except Exception:
 			pass
 
@@ -117,12 +101,17 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.open_settings_dialog()
 
 	def open_settings_dialog(self):
-		try:
-			import gui.settingsDialogs
-			if hasattr(gui.settingsDialogs, 'NVDASettingsDialog'):
-				gui.mainFrame.onSetGeneralSettings(None)
-			else:
-				dlg = wx.Dialog(gui.mainFrame, title=_t("settings_category"), size=(520, 480))
+		def _show():
+			try:
+				import gui
+				if hasattr(gui.mainFrame, 'popupSettingsDialog'):
+					gui.mainFrame.popupSettingsDialog(MVSEPMinusSettingsPanel)
+					return
+			except Exception:
+				pass
+				
+			try:
+				dlg = wx.Dialog(gui.mainFrame, title=_t("settings_category"), size=(550, 520), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
 				panel = MVSEPMinusSettingsPanel(dlg)
 				sizer = wx.BoxSizer(wx.VERTICAL)
 				panel_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -132,12 +121,16 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				btn_sizer = dlg.CreateButtonSizer(wx.OK | wx.CANCEL)
 				sizer.Add(btn_sizer, 0, wx.ALIGN_RIGHT | wx.ALL, 10)
 				dlg.SetSizer(sizer)
+				dlg.CenterOnParent()
 				
 				if dlg.ShowModal() == wx.ID_OK:
 					panel.onSave()
 				dlg.Destroy()
-		except Exception:
-			pass
+			except Exception as ex:
+				if ui and hasattr(ui, 'message'):
+					ui.message(str(ex))
+					
+		wx.CallAfter(_show)
 
 	@script(
 		description=_t("menu_create_minus_desc"),
