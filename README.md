@@ -24,10 +24,13 @@ Audio fayllardan vokalni tozalash va professional sifatli **minus / instrumental
    - Faylni tanlang yoki URL havolani kiriting;
    - Modelni tanlang (`BS Roformer` tavsiya etiladi);
    - "Minus qilishni boshlash" tugmasini bosing. Natija `Downloads/MVSEP_Minus` jildiga tushadi.
+3. **Fon rejimida tezkor minus qilish**:
+   - Audio faylni belgilab, tezkor tugmani bosing.
+   > ⚠️ *Eslatma: Tezkor minus qilish jarayonida `Escape` (Esc) tugmasi bosilmasin, aks holda jarayon bekor bo'ladi.*
 
 ### 🌟 Imkoniyatlar
 - **Ko'p Akkauntlar Boshqaruvi (Multi-Account)** va avtomatik zaxira akkauntga o'tish (Failover);
-- **Saytdagi Tarix**: Oldingi treklarni ko'rish va qayta yuklab olish;
+- **Saytdagi Tarix**: Oldingi treklarni ko'rish va bip progress signallari bilan yuklab olish;
 - **Jonli Navbat**: Server yuklamasini tekshirish;
 - **URL orqali Ajratish**: Google Drive, Dropbox, MEGA va Direct audio;
 - **Xatoliklar Jurnali**: `mvsep_errors.txt` va dasturchiga xabar berish;
@@ -50,10 +53,13 @@ Audio fayllardan vokalni tozalash va professional sifatli **minus / instrumental
    - Выберите файл или укажите ссылку;
    - Выберите модель (`BS Roformer` рекомендуется);
    - Нажмите «Начать разделение». Результат сохранится в `Загрузки/MVSEP_Minus`.
+3. **Быстрое разделение**:
+   - Выделите файл в Проводнике и нажмите назначенную клавишу.
+   > ⚠️ *Примечание: Не нажимайте клавишу `Escape` (Esc) во время быстрого разделения, чтобы не отменить процесс.*
 
 ### 🌟 Возможности
 - **Multi-Account** и автоматическое переключение на резервный аккаунт (Failover);
-- **История на сайте**: Просмотр и повторное скачивание треков;
+- **История на сайте**: Просмотр и скачивание треков со звуковыми сигналами прогресса;
 - **Очередь сервера**: Проверка загрузки серверов;
 - **Разделение по URL**: Google Drive, Dropbox, MEGA и прямые аудио-ссылки;
 - **Журнал ошибок**: Запись в `mvsep_errors.txt` и отправка разработчику;
@@ -76,6 +82,9 @@ A specialized screen reader add-on for NVDA designed to cleanly isolate or remov
    - Select file or paste URL;
    - Choose AI model (`BS Roformer` recommended);
    - Click "Start Separation". Saved to `Downloads/MVSEP_Minus`.
+3. **Quick Separation**:
+   - Select file in Explorer and press hotkey.
+   > ⚠️ *Note: Do not press `Escape` (Esc) during quick separation to avoid accidental cancellation.*
 
 ---
 

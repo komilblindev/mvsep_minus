@@ -38,13 +38,15 @@ A free personal MVSEP API key is required to use this add-on.
 1. Select any audio file in Windows File Explorer;
 2. Press your assigned quick separation hotkey;
 3. The add-on processes the file in the background using your last saved preferences without opening any dialogs.
+> ⚠️ **IMPORTANT NOTE: Do not press `Escape` (Esc) during quick separation!**  
+> Pressing `Escape` will close the active task and immediately cancel the ongoing file transfer or separation.
 
 ---
 
 ### Step 4: Cloud Separation History & Re-downloading
 1. Open add-on settings in NVDA;
 2. Click **"Separation history on site..."**;
-3. Browse previously separated tracks and click **"Download"** to download them directly to your PC.
+3. Browse previously separated tracks and click **"Download"** — file download is accompanied by rising progress beeps and saved to your PC.
 
 ---
 
@@ -52,6 +54,7 @@ A free personal MVSEP API key is required to use this add-on.
 
 - **Multi-Account Management**: Store multiple accounts with visible quota balances and switch seamlessly.
 - **Automated Failover**: Automatically switches to the next configured backup account when limits expire.
+- **History Download with Audible Progress**: Rising tone beeps (220Hz-1760Hz) during history file downloads.
 - **Live Server Queue Inspection**: Real-time server workload and queue status.
 - **Remote Audio URL Separation**: Google Drive, Dropbox, MEGA, and direct URLs.
 - **Error Logging**: Traceback recorded in `mvsep_errors.txt` with one-click developer reporting.

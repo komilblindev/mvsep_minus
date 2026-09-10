@@ -21,6 +21,26 @@ try:
 except ImportError:
 	ui = None
 
+try:
+	import tones
+except ImportError:
+	tones = None
+
+try:
+	import winsound
+except ImportError:
+	winsound = None
+
+
+def play_progress_beep(percent):
+	"""Play NVDA rising progress beep (220 Hz to 1760 Hz)."""
+	if tones and config.get("play_progress_beeps", True):
+		try:
+			freq = int(220 + (max(0, min(100, percent)) / 100.0) * (1760 - 220))
+			tones.beep(freq, 40)
+		except Exception:
+			pass
+
 
 def _speak(text):
 	if ui and hasattr(ui, "message"):
@@ -178,8 +198,13 @@ class SiteHistoryDialog(wx.Dialog):
 						f_type = f.get("type", "minus").lower()
 						clean_name = clean_output_filename(f_url, song_name, f_type)
 						out_path = os.path.join(target_dir, clean_name)
+						last_pct = [-1]
+						def on_progress(pct):
+							if pct != last_pct[0]:
+								last_pct[0] = pct
+								play_progress_beep(pct)
 						try:
-							download_file(f_url, out_path, cancel_event=self.cancel_download)
+							download_file(f_url, out_path, cancel_event=self.cancel_download, progress_callback=on_progress)
 							saved.append(out_path)
 						except urllib.error.HTTPError as he:
 							if he.code == 404:
@@ -201,6 +226,12 @@ class SiteHistoryDialog(wx.Dialog):
 		self.status_lbl.SetLabel(msg)
 		_speak(msg)
 		if ok:
+			play_progress_beep(100)
+			if winsound and config.get("play_completion_sound", True):
+				try:
+					winsound.MessageBeep(winsound.MB_OK)
+				except Exception:
+					pass
 			wx.MessageBox(msg, _t("addon_name"), wx.OK | wx.ICON_INFORMATION, self)
 		else:
 			wx.MessageBox(msg, _t("addon_name"), wx.OK | wx.ICON_WARNING, self)

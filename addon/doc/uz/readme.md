@@ -37,7 +37,9 @@ Plagindan foydalanish uchun bir martalik bepul MVSEP API kaliti kerak bo'ladi.
 ### 3-qadam: Fon rejimida tezkor minus qilish (Tezkor rejim)
 1. Windows Explorer (Fayl boshqaruvchisi)da istalgan audio faylni belgilang;
 2. Plagin uchun biriktirilgan tezkor tugmani bosing;
-3. Plagin hech qanday oyna ochmasdan, fon rejimida oxirgi saqlangan parametrlar asosida faylni serverga yuboradi va natijani tayyorlab beradi.
+3. Plagin avtomatik ravishda oxirgi saqlangan parametrlar asosida faylni serverga yuboradi va fon rejimida ajratishni boshlaydi.
+> ⚠️ **MUHIM ESLATMA: Tezkor minus qilish jarayonida `Escape` (Esc) tugmasi bosilmasin!**  
+> Agar jarayon ketayotgan vaqtda `Escape` tugmasini bossangiz, NVDA faol vazifani yopadi va faylni yuklash yoki minus qilish jarayoni darhol bekor qilinadi.
 
 ---
 
@@ -45,7 +47,7 @@ Plagindan foydalanish uchun bir martalik bepul MVSEP API kaliti kerak bo'ladi.
 1. `NVDA menyusi -> Parametrlar -> Sozlamalar -> MVSEP Minus` bo'limiga kiring;
 2. **"Saytdagi ajratishlar tarixi..."** tugmasini bosing;
 3. Hisobingizda oldin ajratilgan barcha treklarning ro'yxati (fayl nomi, model, sanasi) chiqadi;
-4. Xohlagan trekni tanlab, **"Yuklab olish"** tugmasini bossangiz, fayl darhol kompyuteringizga yuklanadi.
+4. Xohlagan trekni tanlab, **"Yuklab olish"** tugmasini bossangiz, yuklanish davomida ko'tariluvchi progress bip signallari eshitilib, fayl to'g'ridan-to'g'ri kompyuteringizga yuklanadi.
 
 ---
 
@@ -57,6 +59,8 @@ Plagindan foydalanish uchun bir martalik bepul MVSEP API kaliti kerak bo'ladi.
   - "Ro'yxatdan olib tashlash" tugmasi orqali eskirgan hisobni o'chirish.
 - **Avtomatik Zaxira Hisobiga O'tish (Failover)**:
   - Faol hisobda kredit tugasa yoki navbat limiti yetsa (`Not enough credits` / `Queue limit reached`), avtomatik navbatdagi hisobga o'tib, jarayonni to'xtatmasdan davom ettiradi.
+- **Tarixdan Bip Signallari Bilan Yuklab Olish**:
+  - Sayt tarixidagi fayllarni yuklab olish paytida ham 220Hz-1760Hz o'suvchi bip tovushlari yangraydi.
 - **Serverdagi Jonli Navbatni Tekshirish (Live Server Queue)**:
   - Serverdagi ish yuki va kutish navbatini ovozli bilish.
 - **Masofaviy Audio Havolasi (URL) orqali Minus Qilish**:
